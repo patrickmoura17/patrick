@@ -12,8 +12,8 @@ Open `index.html` in a browser to preview.
 
 ## Make it yours
 
-1. **Logo** – `assets/img/logo-white.png` (on dark) and `logo-navy.png` (on light); favicons in the same folder.
-2. **Colours & font** – edit the variables in `:root` at the top of `assets/styles.css` (`--accent` is the warm highlight colour).
+1. **Logo** – `assets/img/logo-white.png` (over photos and the footer), `logo-black.png` (white header), `logo-navy.png` (spare); favicons in the same folder.
+2. **Colours & font** – edit the variables in `:root` at the top of `assets/styles.css` (the site is monochrome: `--ink` for type and buttons, `--paper` for grey sections).
 3. **Photos** – every placeholder box is a `<div class="photo" data-label="…">` (variants: `stone`, `tile`). Either replace it with `<img src="images/kitchen.jpg" alt="…">` or add a background: `style="background-image:url(images/kitchen.jpg)"` (and remove `data-label`).
 4. **Text** – all copy is placeholder; the story section especially needs your own words; check the services and process steps match how you work.
 5. **Contact form** – set the form's `action` to your form service (e.g. Formspree or Netlify Forms). Until then it shows a demo message.

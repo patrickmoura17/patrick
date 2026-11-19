@@ -19,7 +19,8 @@
   <!-- ============ HEADER ============ -->
   <header class="site-header" id="top">
     <a class="logo" href="#top" aria-label="Surffaces home">
-      <img src="assets/img/logo-white.png" alt="Surffaces" width="882" height="116">
+      <img class="logo-light" src="assets/img/logo-white.png" alt="Surffaces" width="882" height="116">
+      <img class="logo-dark" src="assets/img/logo-black.png" alt="Surffaces" width="882" height="116">
     </a>
     <nav class="main-nav" aria-label="Main">
       <a href="#about">About</a>
@@ -72,46 +73,50 @@
     </section>
 
     <!-- ============ 3. SERVICES ============ -->
-    <section class="services section" id="services">
-      <div class="services-media">
-        <div class="photo is-active" data-panel="0"><img src="assets/img/photos/bath-marble.jpg" alt="Bathroom with large-format marble-look wall tile" loading="lazy"></div>
-        <div class="photo" data-panel="1"><img src="assets/img/photos/flooring-herringbone.jpg" alt="Light oak herringbone flooring" loading="lazy"></div>
-        <div class="photo" data-panel="2"><img src="assets/img/photos/kitchen-island-detail.jpg" alt="Marble-look waterfall countertop on a kitchen island" loading="lazy"></div>
-      </div>
-      <div class="services-text">
-        <p class="eyebrow">Services</p>
-        <h2 class="display">What we install</h2>
-        <p class="lead">Three surfaces, supplied and installed by one team. Choose one or combine them.</p>
-        <div class="accordion">
-          <div class="acc-item is-open">
-            <button class="acc-head" aria-expanded="true">Tile<span class="icon" aria-hidden="true"></span></button>
-            <div class="acc-body"><div>
-              <p>Porcelain, ceramic, natural stone and mosaic tile for floors, walls, backsplashes and showers, installed over properly waterproofed surfaces.</p>
-              <p class="tags">Showers &amp; tub surrounds · Backsplashes · Bathroom floors · Feature walls</p>
-            </div></div>
-          </div>
-          <div class="acc-item">
-            <button class="acc-head" aria-expanded="false">Flooring<span class="icon" aria-hidden="true"></span></button>
-            <div class="acc-body"><div>
-              <p>Hardwood, engineered wood, luxury vinyl plank and laminate, from one kitchen to a whole floor of the house, with subfloor prep and new trim.</p>
-              <p class="tags">Hardwood · Engineered wood · Luxury vinyl plank · Laminate</p>
-            </div></div>
-          </div>
-          <div class="acc-item">
-            <button class="acc-head" aria-expanded="false">Countertops<span class="icon" aria-hidden="true"></span></button>
-            <div class="acc-body"><div>
-              <p>Quartz, granite, quartzite and marble for kitchens, islands, vanities and bars. We template, cut sink and cooktop openings, finish the edges and install.</p>
-              <p class="tags">Kitchen counters · Islands &amp; waterfalls · Vanity tops · Backsplashes</p>
-            </div></div>
+    <section class="services section paper" id="services">
+      <p class="eyebrow">Services</p>
+      <h2 class="display">What we install</h2>
+      <div class="services-body">
+        <div class="services-media">
+          <div class="photo is-active" data-panel="0"><img src="assets/img/photos/bath-marble.jpg" alt="Bathroom with large-format marble-look wall tile" loading="lazy"></div>
+          <div class="photo" data-panel="1"><img src="assets/img/photos/flooring-herringbone.jpg" alt="Light oak herringbone flooring" loading="lazy"></div>
+          <div class="photo" data-panel="2"><img src="assets/img/photos/kitchen-island-detail.jpg" alt="Marble-look waterfall countertop on a kitchen island" loading="lazy"></div>
+        </div>
+        <div class="services-text">
+          <p class="lead">Three surfaces, supplied and installed by one team. Choose one or combine them.</p>
+          <div class="accordion">
+            <div class="acc-item is-open">
+              <button class="acc-head" aria-expanded="true">Tile<span class="icon" aria-hidden="true"></span></button>
+              <div class="acc-body"><div>
+                <p>Porcelain, ceramic, natural stone and mosaic tile for floors, walls, backsplashes and showers, installed over properly waterproofed surfaces.</p>
+                <p class="tags">Showers &amp; tub surrounds · Backsplashes · Bathroom floors · Feature walls</p>
+              </div></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">Flooring<span class="icon" aria-hidden="true"></span></button>
+              <div class="acc-body"><div>
+                <p>Hardwood, engineered wood, luxury vinyl plank and laminate, from one kitchen to a whole floor of the house, with subfloor prep and new trim.</p>
+                <p class="tags">Hardwood · Engineered wood · Luxury vinyl plank · Laminate</p>
+              </div></div>
+            </div>
+            <div class="acc-item">
+              <button class="acc-head" aria-expanded="false">Countertops<span class="icon" aria-hidden="true"></span></button>
+              <div class="acc-body"><div>
+                <p>Quartz, granite, quartzite and marble for kitchens, islands, vanities and bars. We template, cut sink and cooktop openings, finish the edges and install.</p>
+                <p class="tags">Kitchen counters · Islands &amp; waterfalls · Vanity tops · Backsplashes</p>
+              </div></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============ 4. PROCESS ============ -->
-    <section class="process section dark" id="process">
-      <p class="eyebrow">Process</p>
-      <h2 class="display">From samples to final walkthrough</h2>
+    <section class="process section" id="process">
+      <div class="centered">
+        <p class="eyebrow">Our process</p>
+        <h2 class="display">From sample to surface</h2>
+      </div>
       <figure class="process-media photo"><img src="assets/img/photos/design-3d.jpg" alt="3D rendering of a kitchen layout on a laptop" loading="lazy"><figcaption>See your layout before anything is cut.</figcaption></figure>
       <ol class="steps">
         <li><span class="step-num">01 /</span><h3>Consultation</h3><p>Tell us about the room, how you use it, the look you want and your budget. Photos and rough measurements help.</p></li>
@@ -125,7 +130,7 @@
 
     <!-- ============ 5. REVIEWS ============ -->
     <!-- EXAMPLE REVIEWS: replace each one with a real customer review (with permission) before launch. -->
-    <section class="reviews section" id="reviews">
+    <section class="reviews section paper" id="reviews">
       <div class="section-head">
         <div>
           <p class="eyebrow">Reviews</p>
@@ -193,7 +198,7 @@
     </section>
 
     <!-- ============ 7. BLOG ============ -->
-    <section class="blog section" id="blog">
+    <section class="blog section paper" id="blog">
       <div class="section-head">
         <div>
           <p class="eyebrow">Blog</p>
@@ -227,9 +232,10 @@
 
     <!-- ============ 8. CONTACT ============ -->
     <section class="contact section" id="contact">
+      <p class="eyebrow">Contact us</p>
+      <h2 class="display">Start your project</h2>
+      <div class="contact-body">
       <div class="contact-intro">
-        <p class="eyebrow">Contact</p>
-        <h2 class="display">Start your project</h2>
         <p class="lead">Tell us which room you're working on and what you have in mind. Photos and rough measurements help us give you a useful answer quickly.</p>
         <ul class="contact-list">
           <li><span>Phone</span><a href="tel:+15049429009">(504) 942-9009</a></li>
@@ -269,6 +275,7 @@
         <button class="btn btn-solid" type="submit">Send request</button>
         <p class="form-note" role="status" aria-live="polite"></p>
       </form>
+      </div>
     </section>
   </main>
 

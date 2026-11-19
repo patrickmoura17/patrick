@@ -12,6 +12,7 @@ const setMenu = (open) => {
   toggle.setAttribute('aria-expanded', String(open));
   toggle.textContent = open ? 'Close' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
+  document.body.classList.toggle('menu-open', open);
 };
 if (toggle && menu) {
   toggle.addEventListener('click', () => setMenu(menu.hidden));
