@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Company — Custom Cabinetry</title>
+  <meta name="description" content="Custom kitchens, closets and vanities — designed, built and installed by Your Company.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <a class="logo" href="#top" aria-label="Your Company home">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-text">YOUR<br>COMPANY</span>
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-pill" href="#contact"><span class="dot"></span>Contact us</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="#top">Home</a>
+    <a href="#about">About</a>
+    <a href="#process">Process</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-media photo" data-label="Hero photo — your best finished kitchen"></div>
+      <div class="hero-content">
+        <h1>Cabinetry made for the way you live.<br>Built to last for decades.</h1>
+        <a class="scroll-cue" href="#about">Scroll down</a>
+      </div>
+    </section>
+
+    <!-- ============ INTRO STATEMENT ============ -->
+    <section class="intro section" id="about">
+      <p class="eyebrow">Our company</p>
+      <h2 class="display">Craft you can see</h2>
+      <p class="statement">
+        We <span>plan carefully.</span> <span>build by hand.</span> <span>install cleanly.</span> <span>finish every detail.</span>
+      </p>
+      <p class="lead">Every cabinet starts as a conversation about your home and ends as something built to fit it exactly — measured on site, made in our shop, and installed by the same team that built it.</p>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="story section">
+      <div class="story-media photo" data-label="Workshop / team photo"></div>
+      <div class="story-text">
+        <p class="eyebrow">Our story</p>
+        <h3>From a small shop to homes across the city.</h3>
+        <p>Replace this with your own story: how many years you've been building, where you started, and what you care about. Keep it to two short paragraphs — people read the first line and skim the rest.</p>
+        <p>Mention what makes you different: in-house manufacturing, the materials you use, or the warranty you stand behind.</p>
+        <div class="stats">
+          <div><strong>20+</strong><span>Years building</span></div>
+          <div><strong>500+</strong><span>Projects installed</span></div>
+          <div><strong>1</strong><span>Team, start to finish</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES (ACCORDION) ============ -->
+    <section class="services section">
+      <div class="services-media">
+        <div class="photo is-active" data-panel="0" data-label="Kitchen photo"></div>
+        <div class="photo" data-panel="1" data-label="Closet photo"></div>
+        <div class="photo" data-panel="2" data-label="Vanity photo"></div>
+        <div class="photo" data-panel="3" data-label="Built-ins photo"></div>
+      </div>
+      <div class="services-text">
+        <p class="eyebrow">What we do</p>
+        <h2 class="display">Built around your space</h2>
+        <p class="lead">Ready to start a project or just weighing options? Here's what we build most.</p>
+        <div class="accordion">
+          <div class="acc-item is-open">
+            <button class="acc-head" aria-expanded="true"><span class="num">01</span>Kitchens<span class="icon" aria-hidden="true"></span></button>
+            <div class="acc-body"><p>Full kitchen cabinetry, islands and pantries, designed around how you cook and store.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" aria-expanded="false"><span class="num">02</span>Closets<span class="icon" aria-hidden="true"></span></button>
+            <div class="acc-body"><p>Walk-ins and reach-ins with drawers, shelving and lighting planned for your wardrobe.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" aria-expanded="false"><span class="num">03</span>Vanities<span class="icon" aria-hidden="true"></span></button>
+            <div class="acc-body"><p>Bathroom vanities and storage in moisture-resistant materials, built to your measurements.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" aria-expanded="false"><span class="num">04</span>And more<span class="icon" aria-hidden="true"></span></button>
+            <div class="acc-body"><p>Media walls, home offices, laundry rooms, libraries — if it's built in, ask us.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="process section dark" id="process">
+      <p class="eyebrow">Our process</p>
+      <h2 class="display">From first sketch to final fit</h2>
+      <ol class="steps">
+        <li><span class="step-num">01 /</span><h3>Consultation</h3><p>We visit, measure and listen — how you use the room, what you like, and your budget.</p></li>
+        <li><span class="step-num">02 /</span><h3>Design</h3><p>Drawings and 3D renderings so you can see the layout before anything is built.</p></li>
+        <li><span class="step-num">03 /</span><h3>Materials</h3><p>Choose woods, finishes and hardware from samples you can hold.</p></li>
+        <li><span class="step-num">04 /</span><h3>Fabrication</h3><p>Everything is cut and assembled in our shop to exact tolerances.</p></li>
+        <li><span class="step-num">05 /</span><h3>Installation</h3><p>Our own crew installs, levels and protects your home along the way.</p></li>
+        <li><span class="step-num">06 /</span><h3>Walkthrough</h3><p>We review every door and drawer with you and fix anything before we call it done.</p></li>
+      </ol>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="projects section" id="projects">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Selected projects</p>
+          <h2 class="display">Recent work</h2>
+        </div>
+        <a class="btn btn-outline" href="#contact">Start yours</a>
+      </div>
+      <div class="project-grid">
+        <a class="project wide" href="#"><div class="photo" data-label="Project photo"></div><span>Walnut kitchen — Neighborhood</span></a>
+        <a class="project" href="#"><div class="photo" data-label="Project photo"></div><span>Primary closet — Neighborhood</span></a>
+        <a class="project" href="#"><div class="photo" data-label="Project photo"></div><span>Double vanity — Neighborhood</span></a>
+        <a class="project wide" href="#"><div class="photo" data-label="Project photo"></div><span>Oak media wall — Neighborhood</span></a>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact section" id="contact">
+      <div class="contact-intro">
+        <p class="eyebrow">Contact us</p>
+        <h2 class="display">Let's build something</h2>
+        <p class="lead">Tell us a little about your project and we'll reply within one business day.</p>
+        <ul class="contact-list">
+          <li><span>Email</span><a href="mailto:hello@yourcompany.com">hello@yourcompany.com</a></li>
+          <li><span>Phone</span><a href="tel:+10000000000">(000) 000-0000</a></li>
+          <li><span>Showroom</span>123 Main Street, Your City</li>
+        </ul>
+      </div>
+      <!-- Point "action" at your form service (Formspree, Netlify Forms, your own backend…) -->
+      <form class="contact-form" action="#" method="post">
+        <div class="row">
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        </div>
+        <div class="row">
+          <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Project type
+            <select name="type">
+              <option>Kitchen</option><option>Closet</option><option>Vanity</option><option>Other</option>
+            </select>
+          </label>
+        </div>
+        <label>Tell us about your project<textarea name="message" rows="5"></textarea></label>
+        <button class="btn btn-solid" type="submit">Send enquiry</button>
+        <p class="form-note" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-cols">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <a href="mailto:hello@yourcompany.com">hello@yourcompany.com</a>
+        <a href="tel:+10000000000">(000) 000-0000</a>
+      </div>
+      <div>
+        <p class="eyebrow">Sitemap</p>
+        <a href="#top">Home</a><a href="#about">About</a><a href="#process">Process</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+      </div>
+      <div>
+        <p class="eyebrow">Follow</p>
+        <a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">Houzz</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Your Company. All rights reserved.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+    <p class="wordmark" aria-hidden="true">YOUR COMPANY</p>
+  </footer>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
