@@ -244,7 +244,7 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .footer-name {
   margin: clamp(32px, 5vw, 64px) 0 -0.17em; white-space: nowrap;
   font-size: calc((100vw - 2 * var(--gutter)) * 0.188); font-weight: 600; text-transform: uppercase; letter-spacing: -0.06em; line-height: .9;
-  background: linear-gradient(180deg, #ffffff 15%, rgba(255,255,255,.18) 95%);
+  background: linear-gradient(180deg, #ffffff 25%, rgba(255,255,255,.6) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
