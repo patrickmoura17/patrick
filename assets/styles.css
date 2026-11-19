@@ -138,7 +138,7 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .services-media .photo { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; }
 .services-media .photo.is-active { opacity: 1; }
 .services-text .lead { margin-top: 0; }
-.accordion { margin-top: 40px; border-top: 1px solid var(--ink); }
+.accordion { margin-top: 0; border-top: 1px solid var(--ink); }
 .acc-item { border-bottom: 1px solid var(--ink); }
 .acc-head {
   width: 100%; display: flex; align-items: center; gap: 16px;
