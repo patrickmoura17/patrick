@@ -6,10 +6,10 @@
   --ink: #0e253a;              /* Surffaces navy: headings, buttons, lines, footer */
   --body: #3d4b59;             /* running text */
   --muted: #6b7886;            /* captions, meta */
-  --line: #d8dee4;             /* hairlines */
-  --paper: #f2f4f6;            /* alternate section background */
+  --line: #dcdcdc;             /* hairlines */
+  --paper: #f4f4f4;            /* alternate section background */
   --white: #ffffff;
-  --pill: #e6eaee;             /* grey pill buttons */
+  --pill: #ececec;             /* grey pill buttons */
   --accent: #b08a5b;           /* warm accent for small details (stars) */
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --gutter: clamp(16px, 4vw, 48px);
@@ -159,11 +159,6 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .acc-item.is-open .acc-body > div { padding-bottom: 28px; }
 
 /* ---------- Process ---------- */
-.process-media { margin: clamp(48px, 7vw, 96px) 0 0; aspect-ratio: 21 / 8; }
-.process-media figcaption {
-  position: absolute; left: 20px; bottom: 16px; z-index: 1;
-  font-size: 14px; font-weight: 500; color: var(--ink); background: var(--white); padding: 10px 16px; border-radius: var(--radius);
-}
 .steps {
   list-style: none; margin: clamp(48px, 7vw, 96px) 0 0; padding: 0;
   display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(24px, 4vw, 64px);
@@ -287,7 +282,6 @@ body.menu-open .menu-toggle { background: var(--pill); }
   .display { font-size: 14.5vw; }
   .hero h1 { font-size: 16.5vw; }
   .hero h1 .nowrap { white-space: normal; }
-  .process-media { aspect-ratio: 4 / 3; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
   .review { padding: 28px; }
