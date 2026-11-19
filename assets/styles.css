@@ -131,7 +131,7 @@ p { margin: 0; }
 .hero-content { position: relative; z-index: 2; padding: 0 var(--gutter) clamp(32px, 6vw, 72px); width: 100%; }
 .hero h1 {
   font-size: clamp(38px, 6vw, 88px); font-weight: 700; text-transform: uppercase;
-  letter-spacing: -0.035em; line-height: .95; max-width: 16ch;
+  letter-spacing: -0.035em; line-height: .95; max-width: 22ch; text-wrap: balance;
 }
 .scroll-cue {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 32px;
@@ -323,3 +323,4 @@ p { margin: 0; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
     .review { padding: 24px; }
 }
+.nowrap { white-space: nowrap; }
