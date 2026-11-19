@@ -7,7 +7,7 @@
   --gray-50: #f2f4f6;
   --gray-200: #d8dee4;
   --gray-500: #6b7886;
-  --accent: #b08a5b;            /* warm wood tone used for small details */
+  --accent: #b08a5b;            /* warm accent used for small details */
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --gutter: clamp(16px, 4vw, 48px);
   --radius: 999px;
@@ -64,6 +64,22 @@ p { margin: 0; }
     linear-gradient(135deg, #5b4632, #a48160 55%, #3a2e22);
   background-size: cover; background-position: center;
 }
+/* Stone (countertops, marble) and tile-grid variants of the placeholder */
+.photo.stone {
+  background:
+    radial-gradient(ellipse 60% 18% at 30% 40%, rgba(255,255,255,.35), transparent 70%),
+    linear-gradient(115deg, transparent 45%, rgba(120,130,140,.35) 47%, transparent 50%),
+    linear-gradient(160deg, transparent 60%, rgba(120,130,140,.25) 61%, transparent 63%),
+    linear-gradient(135deg, #d9dcdf, #b9bfc5 55%, #8e979f);
+}
+.photo.stone.dark-stone { filter: brightness(.55) contrast(1.1); }
+.photo.tile {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.55) 2px, transparent 2px) 0 0 / 64px 64px,
+    linear-gradient(0deg, rgba(255,255,255,.55) 2px, transparent 2px) 0 0 / 64px 64px,
+    linear-gradient(135deg, #8fa3b3, #5f7688 60%, #3f5263);
+}
+.photo.stone::after { color: rgba(14,37,58,.7); }
 .photo::after {
   content: attr(data-label);
   position: absolute; left: 16px; bottom: 14px;
@@ -143,9 +159,6 @@ p { margin: 0; }
 .services-media { position: relative; min-height: 520px; }
 .services-media .photo { position: absolute; inset: 0; opacity: 0; transition: opacity .5s; }
 .services-media .photo.is-active { opacity: 1; }
-.services-media .photo[data-panel="1"] { filter: hue-rotate(-12deg) saturate(.7); }
-.services-media .photo[data-panel="2"] { filter: grayscale(.6) brightness(1.15); }
-.services-media .photo[data-panel="3"] { filter: brightness(.7); }
 .accordion { margin-top: 40px; border-top: 1px solid var(--black); }
 .acc-item { border-bottom: 1px solid var(--black); }
 .acc-head {
