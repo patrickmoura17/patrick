@@ -20,4 +20,12 @@ Open `index.html` in a browser to preview.
 
 ## Sections
 
-Header with pill CTA · full-screen hero · company statement · story with stats · services accordion with image swap · 6-step process · project grid · contact form · footer with large wordmark.
+Hero · About us · Services · Process · Reviews · FAQ · Blog · Contact · Footer
+
+Blog articles live in `blog/` (one HTML file per post; copy one to add another, then add a card in the Blog section of `index.html`).
+
+## Before launch
+
+- **Reviews are examples.** Replace the three reviews in `index.html` with real customer reviews (with permission), and point "Read reviews on Google" at your Google Business profile.
+- **Check the FAQ answers** match how you work (installation, supply-only, trade accounts, timelines).
+- **Social links** in the footer point to `#`; add your real profile URLs.

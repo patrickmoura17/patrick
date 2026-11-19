@@ -13,8 +13,10 @@ const setMenu = (open) => {
   toggle.textContent = open ? 'Close' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
 };
-toggle.addEventListener('click', () => setMenu(menu.hidden));
-menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+if (toggle && menu) {
+  toggle.addEventListener('click', () => setMenu(menu.hidden));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+}
 
 // Services accordion + matching image
 const items = [...document.querySelectorAll('.acc-item')];
@@ -31,7 +33,7 @@ items.forEach((item, i) => {
 });
 
 // Fade sections in as they scroll into view
-const revealTargets = document.querySelectorAll('.section > *, .steps li, .project');
+const revealTargets = document.querySelectorAll('.section > *, .steps li, .review, .post');
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
@@ -42,7 +44,7 @@ if ('IntersectionObserver' in window) {
 }
 
 // Placeholder form handler — replace with your form service
-document.querySelector('.contact-form').addEventListener('submit', (e) => {
+document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
   if (e.target.getAttribute('action') === '#') {
     e.preventDefault();
     e.target.querySelector('.form-note').textContent =
@@ -51,4 +53,5 @@ document.querySelector('.contact-form').addEventListener('submit', (e) => {
   }
 });
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
