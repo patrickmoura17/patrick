@@ -130,8 +130,12 @@ p { margin: 0; }
 .hero-media::after { z-index: 2; top: 90px; bottom: auto; }
 .hero-content { position: relative; z-index: 2; padding: 0 var(--gutter) clamp(32px, 6vw, 72px); width: 100%; }
 .hero h1 {
-  font-size: clamp(38px, 6vw, 88px); font-weight: 700; text-transform: uppercase;
-  letter-spacing: -0.035em; line-height: .95; max-width: 22ch; text-wrap: balance;
+  font-size: clamp(56px, 9.6vw, 176px); font-weight: 700; text-transform: uppercase;
+  letter-spacing: -0.04em; line-height: .9; text-wrap: balance;
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 16.5vw; }
+  .hero h1 .nowrap { white-space: normal; }
 }
 .scroll-cue {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 32px;
