@@ -127,7 +127,7 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .hero-content { position: relative; z-index: 2; padding: 96px var(--gutter) clamp(32px, 5vw, 56px); width: 100%;
   display: flex; flex-direction: column; }
 .hero-main { margin-block: auto; padding-bottom: 6vh; }
-.hero-tagline { margin-top: clamp(18px, 2.2vw, 32px); font-size: clamp(18px, 1.9vw, 28px); font-weight: 500; letter-spacing: -0.02em; max-width: 34ch; }
+.hero-tagline { margin-bottom: clamp(16px, 2vw, 28px); font-size: clamp(18px, 1.9vw, 28px); font-weight: 500; letter-spacing: -0.02em; }
 .hero h1 {
   font-size: clamp(56px, 9.6vw, 176px); font-weight: 700; text-transform: uppercase;
   letter-spacing: -0.05em; line-height: .88; text-wrap: balance;
