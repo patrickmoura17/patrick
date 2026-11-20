@@ -19,16 +19,15 @@ if (toggle && menu) {
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 }
 
-// Services accordion + matching image
+// Services accordion: click a service to open it (and close the others); click again to close
 const items = [...document.querySelectorAll('.acc-item')];
-const panels = [...document.querySelectorAll('.services-media .photo')];
-items.forEach((item, i) => {
+items.forEach((item) => {
   item.querySelector('.acc-head').addEventListener('click', () => {
-    items.forEach((other, j) => {
-      const open = j === i;
+    const opening = !item.classList.contains('is-open');
+    items.forEach((other) => {
+      const open = other === item && opening;
       other.classList.toggle('is-open', open);
       other.querySelector('.acc-head').setAttribute('aria-expanded', String(open));
-      panels[j]?.classList.toggle('is-active', open);
     });
   });
 });
