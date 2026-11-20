@@ -299,8 +299,9 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 }
 @media (max-width: 600px) {
   .display { font-size: 14.5vw; }
-  .hero h1 { font-size: 10.6vw; }
-  .hero .h-line { white-space: nowrap; }
+  /* phones: one left-aligned block that wraps naturally (no zigzag) */
+  .hero h1 { font-size: 16vw; text-wrap: balance; }
+  .hero .h-line { display: inline; text-align: left; }
   .h-right { text-wrap: balance; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
