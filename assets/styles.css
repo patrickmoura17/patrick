@@ -137,7 +137,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .hero-star { width: clamp(36px, 3.4vw, 52px); height: auto; flex: none; }
 .hero-kicker p { font-size: clamp(16px, 1.5vw, 22px); font-weight: 500; text-transform: uppercase; line-height: 1.25; letter-spacing: -0.01em; }
 .hero h1 {
-  font-size: clamp(60px, 10vw, 184px); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(52px, 8vw, 150px); font-weight: 500; text-transform: uppercase;
   letter-spacing: -0.06em; line-height: .86;
 }
 .h-line { display: block; }
@@ -299,7 +299,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 }
 @media (max-width: 600px) {
   .display { font-size: 14.5vw; }
-  .hero h1 { font-size: 17.5vw; }
+  .hero h1 { font-size: 13.5vw; }
   .h-right { text-wrap: balance; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
