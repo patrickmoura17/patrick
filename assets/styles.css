@@ -92,7 +92,8 @@ p { margin: 0; }
 .logo { display: flex; align-items: center; }
 .logo img { height: 26px; width: auto; }
 .logo .logo-light { display: none; }
-.main-nav { display: flex; gap: 28px; margin-left: auto; }
+.main-nav { display: flex; gap: clamp(16px, 1.9vw, 28px); margin-left: auto; }
+.btn { white-space: nowrap; }
 .main-nav a { font-size: 14px; font-weight: 600; text-transform: uppercase; position: relative; }
 .main-nav a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px;
@@ -232,6 +233,21 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .post-link { font-size: 14px; font-weight: 600; text-transform: uppercase; }
 .post:hover .post-link { text-decoration: underline; text-underline-offset: 3px; }
 
+/* ---------- Service areas ---------- */
+.areas-body { margin-top: clamp(48px, 7vw, 96px); }
+.areas-state { font-size: clamp(14px, 1.1vw, 16px); font-weight: 600; text-transform: uppercase; letter-spacing: 0; color: var(--muted); margin-bottom: 16px; }
+.areas-state:not(:first-child) { margin-top: clamp(40px, 5vw, 64px); }
+.areas-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); column-gap: clamp(20px, 3vw, 48px);
+  border-top: 1px solid var(--ink);
+}
+.areas-list li {
+  padding: clamp(14px, 1.6vw, 20px) 0; border-bottom: 1px solid var(--line);
+  font-size: clamp(18px, 1.6vw, 24px); font-weight: 500; letter-spacing: -0.02em;
+}
+.areas-list li:first-child { font-weight: 600; }
+
 /* ---------- Contact ---------- */
 .contact-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: clamp(48px, 7vw, 96px); }
 .contact-intro .lead { margin-top: 0; }
@@ -320,6 +336,7 @@ body.menu-open .call-fab { display: none; }
   .menu-toggle { display: block; }
   .about-body, .contact-body { grid-template-columns: 1fr; }
   .review-grid, .blog-grid { grid-template-columns: 1fr 1fr; }
+  .areas-list { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-sitemap { grid-column: 1 / -1; order: 2; }
   .footer-social { order: 3; }
@@ -337,6 +354,8 @@ body.menu-open .call-fab { display: none; }
   .h-right { text-wrap: balance; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
+  .areas-list { grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .areas-list li { font-size: 17px; }
   .review { padding: 28px; }
   .footer-grid { grid-template-columns: 1fr; }
 }
