@@ -130,7 +130,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .hero-media { position: absolute; inset: 0; }
 .hero-media::before { content: ""; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.12) 45%, rgba(0,0,0,.45)); }
-.hero-content { position: relative; z-index: 2; padding: clamp(165px, 17vw, 215px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 56px); width: 100%;
+.hero-content { position: relative; z-index: 2; padding: clamp(210px, calc(17vw + 45px), 260px) clamp(20px, 4vw, 56px) clamp(28px, 4vw, 56px); width: 100%;
   display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
 /* tagline, slogan and button are spaced evenly: equal gaps between all three */
 .hero-main { display: contents; }
