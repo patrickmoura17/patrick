@@ -144,7 +144,8 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .h-line { display: block; }
 .h-right { text-align: right; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.btn-dot { gap: 22px; padding: 20px 30px; font-size: 15px; }
+.btn-dot { gap: 26px; padding: 20px 32px; font-size: clamp(17px, 1.3vw, 19px); font-weight: 500; letter-spacing: -0.01em; }
+.hero .btn-ghost { border-color: rgba(255,255,255,.7); }
 .btn-dot .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
 /* ---------- About ---------- */
