@@ -55,3 +55,21 @@ document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
 
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
+
+// Floating call button: line it up with the hero's "Start a project" button,
+// so it starts at the same height and then stays there as the page scrolls.
+// Measured in the browser because phone browsers change the visible screen
+// height as their toolbars show and hide.
+const fab = document.querySelector('.call-fab');
+const heroBtn = document.querySelector('.hero .btn-dot');
+if (fab && heroBtn) {
+  const alignFab = () => {
+    const btnBottom = heroBtn.getBoundingClientRect().bottom + window.scrollY; // position in the page
+    const offset = window.innerHeight - btnBottom;                            // gap to the screen bottom at the top of the page
+    fab.style.bottom = offset > 8 ? `${Math.round(offset)}px` : '';
+  };
+  alignFab();
+  window.addEventListener('resize', alignFab);
+  window.addEventListener('load', alignFab);
+  document.fonts?.ready.then(alignFab);
+}
