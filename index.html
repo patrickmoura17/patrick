@@ -294,7 +294,7 @@
         </ul>
       </div>
       <!-- Point "action" at your form service (Formspree, Netlify Forms, your own backend…) -->
-      <form class="contact-form" action="#" method="post">
+      <form class="contact-form" action="#" method="post" enctype="multipart/form-data">
         <div class="row">
           <label for="f-name">Name<input id="f-name" name="name" required autocomplete="name"></label>
           <label for="f-email">Email<input id="f-email" name="email" type="email" required autocomplete="email"></label>
@@ -320,6 +320,17 @@
           </select>
         </label>
         <label for="f-msg">Tell us about your project<textarea id="f-msg" name="message" rows="4"></textarea></label>
+        <div class="upload">
+          <span class="upload-label" id="f-photos-label">Photos of your space (optional)</span>
+          <label class="dropzone" for="f-photos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+            <span class="dz-main">Add photos</span>
+            <span class="dz-sub">Tap to take or choose photos, or drag them here. Up to 10 images, 10&nbsp;MB each.</span>
+            <input id="f-photos" name="photos" type="file" accept="image/*" multiple aria-labelledby="f-photos-label">
+          </label>
+          <ul class="thumbs" aria-live="polite"></ul>
+          <p class="upload-note" role="status"></p>
+        </div>
         <button class="btn btn-solid" type="submit">Send request</button>
         <p class="form-note" role="status" aria-live="polite"></p>
       </form>

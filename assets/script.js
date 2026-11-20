@@ -43,6 +43,45 @@ if ('IntersectionObserver' in window) {
   revealTargets.forEach((el) => { el.classList.add('reveal'); io.observe(el); });
 }
 
+// Photo upload: previews, remove buttons, drag and drop, size and count limits
+const photoInput = document.getElementById('f-photos');
+if (photoInput) {
+  const MAX_FILES = 10, MAX_MB = 10;
+  const zone = photoInput.closest('.dropzone');
+  const list = document.querySelector('.thumbs');
+  const note = document.querySelector('.upload-note');
+  let files = [];
+  const sync = () => {
+    // keep the real file input in step with the list shown, so the form sends exactly these
+    try { const dt = new DataTransfer(); files.forEach((f) => dt.items.add(f)); photoInput.files = dt.files; } catch (_) {}
+    list.innerHTML = '';
+    files.forEach((file, i) => {
+      const li = document.createElement('li');
+      const img = document.createElement('img'); img.alt = file.name; img.src = URL.createObjectURL(file);
+      img.onload = () => URL.revokeObjectURL(img.src);
+      const rm = document.createElement('button'); rm.type = 'button'; rm.textContent = '×'; rm.setAttribute('aria-label', `Remove ${file.name}`);
+      rm.addEventListener('click', () => { files.splice(i, 1); note.textContent = ''; sync(); });
+      li.append(img, rm); list.append(li);
+    });
+  };
+  const add = (incoming) => {
+    const skipped = [];
+    for (const f of incoming) {
+      if (!f.type.startsWith('image/')) { skipped.push(`${f.name} isn't an image`); continue; }
+      if (f.size > MAX_MB * 1024 * 1024) { skipped.push(`${f.name} is over ${MAX_MB} MB`); continue; }
+      if (files.length >= MAX_FILES) { skipped.push(`only ${MAX_FILES} photos can be added`); break; }
+      files.push(f);
+    }
+    note.textContent = skipped.length ? `Not added: ${skipped.join('; ')}.` : (files.length ? `${files.length} photo${files.length > 1 ? 's' : ''} added.` : '');
+    sync();
+  };
+  photoInput.addEventListener('change', () => add([...photoInput.files]));
+  ['dragenter', 'dragover'].forEach((t) => zone.addEventListener(t, (e) => { e.preventDefault(); zone.classList.add('is-over'); }));
+  ['dragleave', 'drop'].forEach((t) => zone.addEventListener(t, () => zone.classList.remove('is-over')));
+  zone.addEventListener('drop', (e) => { e.preventDefault(); add([...(e.dataTransfer?.files || [])]); });
+  photoInput.form?.addEventListener('reset', () => { files = []; note.textContent = ''; setTimeout(sync); });
+}
+
 // Placeholder form handler — replace with your form service
 document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
   if (e.target.getAttribute('action') === '#') {

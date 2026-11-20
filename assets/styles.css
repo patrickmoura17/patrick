@@ -278,6 +278,31 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .contact-form .checks label { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 400; text-transform: none; }
 .checks input { width: 18px; height: 18px; accent-color: var(--ink); }
 
+/* ---------- Photo upload ---------- */
+.upload { display: grid; gap: 10px; }
+.upload-label { font-size: 13px; font-weight: 600; text-transform: uppercase; }
+.dropzone {
+  position: relative; display: grid; justify-items: center; gap: 6px; text-align: center; cursor: pointer;
+  padding: 28px 20px; border: 1.5px dashed var(--ink); border-radius: 20px; background: var(--white);
+  transition: background .2s, border-color .2s;
+}
+.dropzone:hover, .dropzone.is-over { background: var(--pill); }
+.dropzone:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.dropzone svg { width: 34px; height: 34px; }
+.dz-main { font-size: 17px; font-weight: 600; text-transform: uppercase; }
+.dz-sub { font-size: 14px; font-weight: 400; text-transform: none; color: var(--muted); max-width: 36ch; }
+.dropzone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.thumbs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
+.thumbs:empty { display: none; }
+.thumbs li { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--pill); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.thumbs button {
+  position: absolute; top: 5px; right: 5px; width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ink); color: var(--white); font: 600 16px/1 var(--font); display: grid; place-items: center;
+}
+.upload-note { font-size: 14px; color: var(--muted); }
+.upload-note:empty { display: none; }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--ink); color: var(--white); padding: clamp(72px, 9vw, 120px) var(--gutter) clamp(40px, 5vw, 64px); overflow: hidden; }
 .site-footer .eyebrow { color: rgba(255,255,255,.6); margin-bottom: 18px; }
