@@ -293,7 +293,6 @@ body.menu-open .menu-toggle { background: var(--pill); }
 @media (max-width: 600px) {
   .display { font-size: 14.5vw; }
   .hero h1 { font-size: 16.5vw; }
-  .hero h1 .nowrap { white-space: normal; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
   .review { padding: 28px; }
