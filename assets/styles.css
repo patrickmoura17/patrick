@@ -221,7 +221,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .faq-list details p { color: var(--body); font-size: 18px; padding: 0 0 28px; max-width: 70ch; }
 
 /* ---------- Blog ---------- */
-.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: clamp(40px, 6vw, 72px); }
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px clamp(24px, 2.6vw, 40px); margin-top: clamp(40px, 6vw, 72px); }
 .post { display: grid; gap: 12px; align-content: start; }
 .post .photo { aspect-ratio: 4 / 3; margin-bottom: 8px; }
 .post .photo img { transition: transform .6s ease; }
