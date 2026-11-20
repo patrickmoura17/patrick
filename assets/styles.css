@@ -24,8 +24,13 @@ body {
   color: var(--ink);
   background: var(--white);
   line-height: 1.5;
+  letter-spacing: -0.01em;
+  /* Inter Display: Inter's display optical size, used for all text */
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 32;
   -webkit-font-smoothing: antialiased;
 }
+button, input, select, textarea { font-variation-settings: "opsz" 32; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 h1, h2, h3 { margin: 0; line-height: 1; letter-spacing: -0.02em; }
