@@ -146,6 +146,9 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn-dot { gap: 26px; padding: 20px 32px; font-size: clamp(17px, 1.3vw, 19px); font-weight: 500; letter-spacing: -0.01em; }
 .hero .btn-ghost { border-color: rgba(255,255,255,.7); }
+/* hero button: same height as the round buttons, and same distance from the bottom as the call button */
+.hero .btn-dot { height: 56px; padding-block: 0; }
+.hero-content { padding-bottom: 21px !important; }
 .btn-dot .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
 /* ---------- About ---------- */
