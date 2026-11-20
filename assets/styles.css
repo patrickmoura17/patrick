@@ -126,7 +126,8 @@ body.menu-open .menu-toggle { background: var(--pill); }
   background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.15) 40%, rgba(0,0,0,.45)); }
 .hero-content { position: relative; z-index: 2; padding: 96px var(--gutter) clamp(32px, 5vw, 56px); width: 100%;
   display: flex; flex-direction: column; }
-.hero h1 { margin-block: auto; padding-bottom: 6vh; }
+.hero-main { margin-block: auto; padding-bottom: 6vh; }
+.hero-tagline { margin-top: clamp(18px, 2.2vw, 32px); font-size: clamp(18px, 1.9vw, 28px); font-weight: 500; letter-spacing: -0.02em; max-width: 34ch; }
 .hero h1 {
   font-size: clamp(56px, 9.6vw, 176px); font-weight: 700; text-transform: uppercase;
   letter-spacing: -0.05em; line-height: .88; text-wrap: balance;
@@ -237,7 +238,7 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .checks input { width: 18px; height: 18px; accent-color: var(--ink); }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--ink); color: var(--white); padding: clamp(72px, 9vw, 120px) var(--gutter) 0; overflow: hidden; }
+.site-footer { background: var(--ink); color: var(--white); padding: clamp(72px, 9vw, 120px) var(--gutter) clamp(40px, 5vw, 64px); overflow: hidden; }
 .site-footer .eyebrow { color: rgba(255,255,255,.6); margin-bottom: 18px; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 56px 32px; align-items: start; }
 .footer-grid > * { display: grid; justify-items: start; align-content: start; min-width: 0; }
@@ -246,12 +247,6 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .site-footer a { transition: opacity .2s; }
 .site-footer a:hover { opacity: .6; }
 .footer-copy { margin-top: clamp(56px, 7vw, 96px); font-size: clamp(18px, 1.6vw, 24px); font-weight: 400; }
-.footer-name {
-  margin: clamp(32px, 5vw, 64px) calc(-1 * var(--gutter)) -0.17em; white-space: nowrap; text-align: center;
-  font-size: 19.4vw; transform: translateX(-0.032em); font-weight: 600; text-transform: uppercase; letter-spacing: -0.06em; line-height: .9;
-  background: linear-gradient(180deg, #ffffff 25%, rgba(255,255,255,.6) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
 
 /* ---------- Blog article pages ---------- */
 .article-page .site-header { position: sticky; top: 0; }
