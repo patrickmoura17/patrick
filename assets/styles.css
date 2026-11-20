@@ -240,9 +240,8 @@ body.menu-open .menu-toggle { background: var(--pill); }
 .site-footer .eyebrow { color: rgba(255,255,255,.6); margin-bottom: 18px; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 56px 32px; align-items: start; }
 .footer-grid > * { display: grid; justify-items: start; align-content: start; min-width: 0; }
-.footer-contact a, .footer-social a { font-size: clamp(17px, 1.4vw, 20px); font-weight: 600; text-transform: uppercase; padding: 6px 0; }
+.footer-contact a, .footer-sitemap a, .footer-social a { font-size: clamp(17px, 1.4vw, 20px); font-weight: 600; text-transform: uppercase; padding: 6px 0; }
 .footer-contact a { overflow-wrap: anywhere; }
-.footer-sitemap a { font-size: clamp(38px, 4vw, 56px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.12; }
 .site-footer a { transition: opacity .2s; }
 .site-footer a:hover { opacity: .6; }
 .footer-copy { margin-top: clamp(56px, 7vw, 96px); font-size: clamp(18px, 1.6vw, 24px); font-weight: 400; }
