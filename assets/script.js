@@ -10,7 +10,7 @@ const menu = document.getElementById('mobile-menu');
 const setMenu = (open) => {
   menu.hidden = !open;
   toggle.setAttribute('aria-expanded', String(open));
-  toggle.textContent = open ? 'Close' : 'Menu';
+  toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
   document.body.style.overflow = open ? 'hidden' : '';
   document.body.classList.toggle('menu-open', open);
 };
