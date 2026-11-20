@@ -256,7 +256,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .areas-map img { width: 100%; height: auto; }
 
 /* ---------- Contact ---------- */
-.contact { padding-top: clamp(40px, 6vw, 80px); }
+.contact { padding-top: clamp(88px, 10vw, 150px); }
 .contact-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: clamp(48px, 7vw, 96px); }
 .contact-intro .lead { margin-top: 0; }
 .contact-list { list-style: none; padding: 0; margin: 40px 0 0; }
