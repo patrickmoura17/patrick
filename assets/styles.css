@@ -281,24 +281,24 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 /* ---------- Photo upload ---------- */
 .upload { display: grid; gap: 10px; }
 .upload-label { font-size: 13px; font-weight: 600; text-transform: uppercase; }
-.dropzone {
-  position: relative; display: grid; justify-items: center; gap: 6px; text-align: center; cursor: pointer;
-  padding: 28px 20px; border: 1.5px dashed var(--ink); border-radius: 20px; background: var(--white);
+.contact-form .dropzone {
+  position: relative; display: inline-flex; align-items: center; gap: 12px; justify-self: start; cursor: pointer;
+  padding: 10px 20px 10px 14px; border: 1.5px dashed var(--ink); border-radius: 999px; background: var(--white);
   transition: background .2s, border-color .2s;
 }
 .dropzone:hover, .dropzone.is-over { background: var(--pill); }
 .dropzone:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
-.dropzone svg { width: 34px; height: 34px; }
-.dz-main { font-size: 17px; font-weight: 600; text-transform: uppercase; }
-.dz-sub { font-size: 14px; font-weight: 400; text-transform: none; color: var(--muted); max-width: 36ch; }
+.dropzone svg { width: 22px; height: 22px; flex: none; }
+.dz-main { font-size: 14px; font-weight: 600; text-transform: uppercase; }
+.dz-sub { font-size: 13px; font-weight: 400; text-transform: none; color: var(--muted); }
 .dropzone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
-.thumbs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
+.thumbs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, 64px); gap: 8px; }
 .thumbs:empty { display: none; }
-.thumbs li { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--pill); }
+.thumbs li { position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--pill); }
 .thumbs img { width: 100%; height: 100%; object-fit: cover; }
 .thumbs button {
-  position: absolute; top: 5px; right: 5px; width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer;
-  background: var(--ink); color: var(--white); font: 600 16px/1 var(--font); display: grid; place-items: center;
+  position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ink); color: var(--white); font: 600 13px/1 var(--font); display: grid; place-items: center;
 }
 .upload-note { font-size: 14px; color: var(--muted); }
 .upload-note:empty { display: none; }
