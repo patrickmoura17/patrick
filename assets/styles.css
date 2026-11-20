@@ -153,8 +153,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .btn-dot .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
 /* ---------- About ---------- */
-.about-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: clamp(48px, 7vw, 96px); align-items: start; }
-.about-media { aspect-ratio: 4 / 3; }
+.about-body { margin-top: clamp(48px, 7vw, 96px); max-width: 900px; }
 .about-lead { font-size: clamp(22px, 2.3vw, 34px); font-weight: 500; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 24px; }
 .about-text > p:not(.about-lead) { color: var(--body); font-size: clamp(17px, 1.3vw, 19px); max-width: 56ch; }
 
@@ -334,7 +333,7 @@ body.menu-open .call-fab { display: none; }
 @media (max-width: 960px) {
   .main-nav, .site-header .btn-pill { display: none; }
   .menu-toggle { display: block; }
-  .about-body, .contact-body { grid-template-columns: 1fr; }
+  .contact-body { grid-template-columns: 1fr; }
   .review-grid, .blog-grid { grid-template-columns: 1fr 1fr; }
   .areas-list { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
