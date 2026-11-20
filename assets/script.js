@@ -82,14 +82,26 @@ if (photoInput) {
   photoInput.form?.addEventListener('reset', () => { files = []; note.textContent = ''; setTimeout(sync); });
 }
 
-// Placeholder form handler — replace with your form service
+// Contact form: demo message when the form has no handler (the preview);
+// on the live site, show "Sending…" while the request and photos upload.
 document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
-  if (e.target.getAttribute('action') === '#') {
+  const form = e.target;
+  const note = form.querySelector('.form-note');
+  if (form.getAttribute('action') === '#') {
     e.preventDefault();
-    e.target.querySelector('.form-note').textContent =
-      'Thanks! (Demo only — connect this form to a service to receive enquiries.)';
-    e.target.reset();
+    note.textContent = 'Thanks! (Demo only: this preview does not send requests.)';
+    form.reset();
+    return;
   }
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  note.textContent = 'Sending your request. This can take a moment with photos.';
+});
+// If the visitor comes back to the page, re-enable the button
+window.addEventListener('pageshow', () => {
+  const btn = document.querySelector('.contact-form button[type="submit"]');
+  if (btn) { btn.disabled = false; btn.textContent = 'Send request'; }
 });
 
 const year = document.getElementById('year');

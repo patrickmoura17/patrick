@@ -16,7 +16,7 @@ Open `index.html` in a browser to preview.
 2. **Colours & font** – the font is Inter Display (Inter at its display optical size, loaded from Google Fonts). Edit the variables in `:root` at the top of `assets/styles.css` (`--ink` is the Surffaces navy used for type, buttons and the footer; `--paper` is the light grey section background).
 3. **Photos** – every placeholder box is a `<div class="photo" data-label="…">` (variants: `stone`, `tile`). Either replace it with `<img src="images/kitchen.jpg" alt="…">` or add a background: `style="background-image:url(images/kitchen.jpg)"` (and remove `data-label`).
 4. **Text** – all copy is placeholder; the story section especially needs your own words; check the services and process steps match how you work.
-5. **Contact form** – set the form's `action` to your form service (e.g. Formspree or Netlify Forms). Until then it shows a demo message.
+5. **Contact form** – `send-request.php` emails each request (with up to 10 photos attached) to contact@surffaces.com using the hosting server's mail, then shows `thank-you.html`. Change the address at the top of that file. It needs PHP hosting (Hostinger), so it won't work when opening `index.html` straight from your computer.
 
 ## Sections
 

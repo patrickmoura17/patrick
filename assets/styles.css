@@ -277,6 +277,11 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .contact-form .checks label { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 400; text-transform: none; }
 .checks input { width: 18px; height: 18px; accent-color: var(--ink); }
 
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.contact-form button[disabled] { opacity: .6; cursor: progress; }
+.status-page { min-height: 60vh; display: grid; align-content: center; gap: 20px; justify-items: start; }
+.status-page h1 { margin: 0; }
+
 /* ---------- Photo upload ---------- */
 .upload { display: grid; gap: 10px; }
 .upload-label { font-size: 13px; font-weight: 600; text-transform: uppercase; }

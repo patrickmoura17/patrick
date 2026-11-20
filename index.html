@@ -290,8 +290,10 @@
           <li><span>Email</span><a href="mailto:contact@surffaces.com">contact@surffaces.com</a></li>
         </ul>
       </div>
-      <!-- Point "action" at your form service (Formspree, Netlify Forms, your own backend…) -->
-      <form class="contact-form" action="#" method="post" enctype="multipart/form-data">
+      <!-- Sent by send-request.php: emails the request (with photos) to contact@surffaces.com -->
+      <form class="contact-form" action="send-request.php" method="post" enctype="multipart/form-data">
+        <!-- spam trap: hidden from people, bots fill it in -->
+        <p class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></p>
         <div class="row">
           <label for="f-name">Name<input id="f-name" name="name" required autocomplete="name"></label>
           <label for="f-email">Email<input id="f-email" name="email" type="email" required autocomplete="email"></label>
@@ -306,10 +308,10 @@
         </div>
         <fieldset class="checks">
           <legend>I'm interested in</legend>
-          <label><input type="checkbox" name="interest" value="Tile"> Tile</label>
-          <label><input type="checkbox" name="interest" value="Flooring"> Flooring</label>
-          <label><input type="checkbox" name="interest" value="Cabinets"> Cabinets</label>
-          <label><input type="checkbox" name="interest" value="Countertops"> Countertops</label>
+          <label><input type="checkbox" name="interest[]" value="Tile"> Tile</label>
+          <label><input type="checkbox" name="interest[]" value="Flooring"> Flooring</label>
+          <label><input type="checkbox" name="interest[]" value="Cabinets"> Cabinets</label>
+          <label><input type="checkbox" name="interest[]" value="Countertops"> Countertops</label>
         </fieldset>
         <label for="f-when">When do you want to start?
           <select id="f-when" name="timeline">
@@ -323,7 +325,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
             <span class="dz-main">Add photos</span>
             <span class="dz-sub">Up to 10 images</span>
-            <input id="f-photos" name="photos" type="file" accept="image/*" multiple aria-labelledby="f-photos-label">
+            <input id="f-photos" name="photos[]" type="file" accept="image/*" multiple aria-labelledby="f-photos-label">
           </label>
           <ul class="thumbs" aria-live="polite"></ul>
           <p class="upload-note" role="status"></p>
