@@ -283,15 +283,16 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 /* ---------- Floating call button (follows the page) ---------- */
 .call-fab {
   position: fixed; z-index: 30;
-  right: calc(clamp(16px, 2.5vw, 32px) + env(safe-area-inset-right, 0px));
-  bottom: calc(clamp(16px, 2.5vw, 32px) + env(safe-area-inset-bottom, 0px));
-  width: 62px; height: 62px; border-radius: 50%;
+  /* lines up with the round menu button: header inset + border + padding */
+  right: calc(clamp(10px, 1.4vw, 18px) + 21px + env(safe-area-inset-right, 0px));
+  bottom: calc(clamp(10px, 1.4vw, 18px) + 21px + env(safe-area-inset-bottom, 0px));
+  width: 56px; height: 56px; border-radius: 50%;
   display: grid; place-items: center;
   background: var(--ink); color: var(--white);
   box-shadow: 0 8px 24px rgba(14,37,58,.35), 0 0 0 3px rgba(255,255,255,.85);
   transition: transform .2s, background .2s;
 }
-.call-fab svg { width: 26px; height: 26px; }
+.call-fab svg { width: 24px; height: 24px; }
 .call-fab:hover { transform: scale(1.06); background: #1d3a55; }
 .call-fab:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
 .call-fab::before {
