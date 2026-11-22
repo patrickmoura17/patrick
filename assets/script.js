@@ -104,42 +104,6 @@ window.addEventListener('pageshow', () => {
   if (btn) { btn.disabled = false; btn.textContent = 'Send request'; }
 });
 
-// Live Google reviews (newest 3), served by reviews.php. Until there are reviews,
-// the section shows a short note and the "Review us on Google" button.
-(async () => {
-  const grid = document.querySelector('#reviews .review-grid');
-  if (!grid || !location.protocol.startsWith('http')) return;
-  try {
-    const res = await fetch('reviews.php', { headers: { Accept: 'application/json' } });
-    if (!res.ok) return;
-    const data = await res.json();
-    const list = Array.isArray(data.reviews) ? data.reviews : [];
-    const summary = document.querySelector('#reviews .rating-summary');
-    if (data.rating && data.count && summary) {
-      summary.innerHTML = '<span class="stars" aria-hidden="true">★★★★★</span>';
-      summary.append(`${data.rating.toFixed(1)} out of 5 from ${data.count} Google review${data.count === 1 ? '' : 's'}`);
-      summary.hidden = false;
-    }
-    if (!list.length) return;
-    const g = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.5z"/><path fill="#34A853" d="M12 23.5c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.4 1.1-3.9 1.1-3 0-5.5-2-6.4-4.8H1.8v3A11.5 11.5 0 0 0 12 23.5z"/><path fill="#FBBC05" d="M5.6 14.1a6.9 6.9 0 0 1 0-4.3v-3H1.8a11.5 11.5 0 0 0 0 10.3z"/><path fill="#EA4335" d="M12 4.6c1.7 0 3.2.6 4.4 1.7l3.3-3.3A11.5 11.5 0 0 0 1.8 6.8l3.8 3C6.5 6.9 9 4.6 12 4.6z"/></svg>';
-    grid.replaceChildren(...list.map((r) => {
-      const fig = document.createElement('figure'); fig.className = 'review';
-      const stars = document.createElement('div'); stars.className = 'stars';
-      const n = Math.max(0, Math.min(5, r.rating | 0));
-      stars.textContent = '★'.repeat(n) + '☆'.repeat(5 - n); stars.setAttribute('aria-label', `${n} out of 5 stars`);
-      const q = document.createElement('blockquote'); q.textContent = `“${r.text}”`;
-      const cap = document.createElement('figcaption');
-      const who = document.createElement(r.author_url ? 'a' : 'strong'); who.textContent = r.author;
-      if (r.author_url) { who.href = r.author_url; who.target = '_blank'; who.rel = 'noopener'; who.style.fontWeight = '700'; }
-      const meta = document.createElement('span'); meta.className = 'g-credit';
-      meta.innerHTML = g; meta.append(`${r.when ? r.when + ' · ' : ''}Google review`);
-      cap.append(who, meta); fig.append(stars, q, cap); return fig;
-    }));
-    grid.hidden = false;
-    document.querySelector('#reviews .reviews-empty').hidden = true;
-  } catch (_) { /* keep the note and button */ }
-})();
-
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
