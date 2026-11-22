@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 // Surffaces "Start your project" form handler.
 // Emails each request to the company inbox, with the customer's photos attached,
-// then sends the visitor to thank-you.html. Uses the hosting server's built-in mail().
+// then sends the visitor to thank-you.html.
+//
+// Sending: through the Hostinger Mail API from the contact@ mailbox itself, so the
+// message is signed by the email service and lands in the inbox. The API key lives
+// on the server only, in private/mail-api.php (never in this repository):
+//   <?php return ['token' => '...', 'mailbox' => 'AC...'];
+// If that file is missing or the API fails, it falls back to the server's mail().
 
 const RECIPIENT   = 'contact@surffaces.com';   // where requests are delivered
 const SENDER      = 'contact@surffaces.com';   // must be a mailbox on surffaces.com
@@ -86,6 +92,34 @@ if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     page(422, 'Please check your details', 'We need your name and a valid email address so we can reply.');
 }
 
+// Phone photos are often 3-5 MB. Scale big ones down (long side 1800 px, JPEG)
+// so the email stays small and sends quickly. Formats the server can't read
+// (e.g. HEIC) are sent as they are.
+function shrink(string $path, string $type): array {
+    $raw = file_get_contents($path);
+    if (!function_exists('imagecreatefromstring') || !in_array($type, ['image/jpeg', 'image/png', 'image/webp'], true)) {
+        return [$raw, $type];
+    }
+    $img = @imagecreatefromstring($raw);
+    if (!$img) return [$raw, $type];
+    if ($type === 'image/jpeg' && function_exists('exif_read_data')) {   // keep phone photos upright
+        $o = (int)(@exif_read_data($path)['Orientation'] ?? 1);
+        if ($o === 3) $img = imagerotate($img, 180, 0);
+        elseif ($o === 6) $img = imagerotate($img, -90, 0);
+        elseif ($o === 8) $img = imagerotate($img, 90, 0);
+    }
+    $w = imagesx($img); $h = imagesy($img); $max = 1800;
+    $scale = min(1, $max / max($w, $h));
+    if ($scale < 1) {
+        $img = imagescale($img, (int)round($w * $scale), (int)round($h * $scale), IMG_BICUBIC);
+    }
+    $flat = imagecreatetruecolor(imagesx($img), imagesy($img));             // JPEG has no transparency
+    imagefill($flat, 0, 0, imagecolorallocate($flat, 255, 255, 255));
+    imagecopy($flat, $img, 0, 0, 0, 0, imagesx($img), imagesy($img));
+    ob_start(); imagejpeg($flat, null, 82); $out = ob_get_clean();
+    return strlen($out) < strlen($raw) ? [$out, 'image/jpeg'] : [$raw, $type];
+}
+
 // ---- Photos ----
 $attachments = [];
 $total = 0;
@@ -112,10 +146,11 @@ if ($files && is_array($files['name'])) {
         if ($total > MAX_TOTAL_MB * 1024 * 1024) {
             page(413, 'Your photos are too large', 'Together, photos can be up to ' . MAX_TOTAL_MB . ' MB. Please send fewer or smaller photos.');
         }
+        [$data, $outType] = shrink($files['tmp_name'][$i], $type);
         $attachments[] = [
-            'name' => sprintf('photo-%02d.%s', count($attachments) + 1, $allowed[$type]),
-            'type' => $type,
-            'data' => file_get_contents($files['tmp_name'][$i]),
+            'name' => sprintf('photo-%02d.%s', count($attachments) + 1, $allowed[$outType]),
+            'type' => $outType,
+            'data' => $data,
         ];
     }
 }
@@ -165,7 +200,55 @@ foreach ($attachments as $a) {
 }
 $body .= "--$boundary--\r\n";
 
-if (!function_exists('mail') || !mail(RECIPIENT, $subject, $body, $headers, '-f' . SENDER)) {
+// HTML version with a one-click reply link (the API can't set Reply-To).
+$e = fn(string $v) => htmlspecialchars($v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$replyHref = 'mailto:' . rawurlencode($email) . '?subject=' . rawurlencode('Re: your Surffaces project request');
+$rows = [
+    ['Name', $name], ['Email', $email], ['Phone', $phone ?: '-'], ['Room', $room ?: '-'],
+    ['Interested in', $interests ? implode(', ', $interests) : '-'], ['Start', $timeline ?: '-'],
+    ['Photos', (string)count($attachments)],
+];
+$html = '<div style="font-family:Arial,sans-serif;font-size:15px;color:#0e253a">'
+      . '<p><a href="' . $e($replyHref) . '" style="display:inline-block;background:#0e253a;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:bold">Reply to ' . $e($name) . '</a></p>'
+      . '<table cellpadding="6" style="border-collapse:collapse">';
+foreach ($rows as [$k, $v]) $html .= '<tr><td style="color:#6b7886">' . $e($k) . '</td><td><strong>' . $e($v) . '</strong></td></tr>';
+$html .= '</table><p style="color:#6b7886;margin-top:18px">Project details</p><p>' . nl2br($e($message !== '' ? $message : '-')) . '</p></div>';
+
+function send_via_api(array $cfg, string $subject, string $text, string $html, array $attachments): bool {
+    if (!function_exists('curl_init')) return false;
+    $payload = [
+        'to' => [RECIPIENT],
+        'displayName' => 'Surffaces Website',
+        'subject' => $subject,
+        'text' => $text,
+        'html' => $html,
+        'attachments' => array_map(fn($a) => [
+            'filename' => $a['name'], 'contentType' => $a['type'], 'content' => base64_encode($a['data']),
+        ], $attachments),
+    ];
+    $ch = curl_init('https://api.mail.hostinger.com/api/v1/mailboxes/' . rawurlencode($cfg['mailbox']) . '/send');
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $cfg['token'], 'Content-Type: application/json', 'Accept: application/json'],
+        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 60,
+    ]);
+    $resp = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($code >= 200 && $code < 300) return true;
+    error_log('Surffaces form: Mail API send failed (' . $code . '): ' . substr((string)$resp, 0, 300));
+    return false;
+}
+
+$cfgFile = __DIR__ . '/private/mail-api.php';
+$cfg = is_file($cfgFile) ? (require $cfgFile) : null;
+$sent = is_array($cfg) && !empty($cfg['token']) && !empty($cfg['mailbox'])
+    && send_via_api($cfg, 'New project request: ' . $subjectName, $text, $html, $attachments);
+
+if (!$sent && (!function_exists('mail') || !mail(RECIPIENT, $subject, $body, $headers, '-f' . SENDER))) {
     page(503, 'Your request was not sent', 'Something went wrong on our side. Please try again in a few minutes.');
 }
 
