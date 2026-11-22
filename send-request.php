@@ -5,8 +5,8 @@ declare(strict_types=1);
 // Emails each request to the company inbox, with the customer's photos attached,
 // then sends the visitor to thank-you.html. Uses the hosting server's built-in mail().
 
-const RECIPIENT   = 'info@surffaces.com';   // where requests are delivered
-const SENDER      = 'info@surffaces.com';   // must be a mailbox on surffaces.com
+const RECIPIENT   = 'contact@surffaces.com';   // where requests are delivered
+const SENDER      = 'contact@surffaces.com';   // must be a mailbox on surffaces.com
 const MAX_PHOTOS  = 10;
 const MAX_PHOTO_MB = 10;
 const MAX_TOTAL_MB = 25;                      // keeps the email under common size limits
@@ -38,7 +38,7 @@ function page(int $status, string $title, string $message): never {
   <main class="article status-page">
     <h1>{$t}</h1>
     <p>{$m}</p>
-    <p>You can also call us at <a class="link nowrap" href="tel:+18542267060">(854) 226-7060</a> or email <a class="link" href="mailto:info@surffaces.com">info@surffaces.com</a>.</p>
+    <p>You can also call us at <a class="link nowrap" href="tel:+18542267060">(854) 226-7060</a> or email <a class="link" href="mailto:contact@surffaces.com">contact@surffaces.com</a>.</p>
     <a class="btn btn-solid" href="/#contact">Back to the form</a>
   </main>
 </body>
