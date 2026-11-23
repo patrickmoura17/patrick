@@ -144,6 +144,11 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 }
 .h-line { display: block; }
 .h-right { text-align: right; }
+/* Computers only (mouse/trackpad, not touch): tagline on a single line */
+@media (min-width: 601px) and (hover: hover) and (pointer: fine) {
+  .hero-kicker h1 br { display: none; }
+  .hero-kicker h1 { white-space: nowrap; }
+}
 /* Computers: zigzag like the phone, left / right / left, filling the width */
 @media (min-width: 601px) and (orientation: landscape) {
   .hero .h-line:nth-child(3) { text-align: left; }
