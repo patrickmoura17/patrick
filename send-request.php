@@ -35,7 +35,7 @@ function page(int $status, string $title, string $message): never {
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=ecb62214">
+  <link rel="stylesheet" href="/assets/styles.css?v=dfc74274">
 </head>
 <body class="article-page">
   <header class="site-header scrolled">

@@ -149,6 +149,7 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
   .hero-kicker h1 br { display: none; }
   .hero-kicker h1 { white-space: nowrap; }
   .hero .hero-slogan { font-size: clamp(52px, min(8.6vw, 13.6vh), 184px); }
+  .hero .hero-content { padding-top: clamp(200px, 26vh, 290px); }
 }
 /* Computers: zigzag like the phone, left / right / left, filling the width */
 @media (min-width: 601px) and (orientation: landscape) {
