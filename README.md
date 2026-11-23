@@ -34,3 +34,7 @@ Blog articles live in `blog/` (one HTML file per post; copy one to add another, 
 
 - `robots.txt` allows crawling (except the form handler, thank-you page and `private/`) and points to the sitemap.
 - `sitemap.xml` lists the homepage and the blog guides. **Add every new public page to it** (with its `www.surffaces.com` address) when you create one.
+
+## Publishing changes
+
+Browsers keep `assets/styles.css` and `assets/script.js` for 7 days. Whenever either file changes, update the `?v=` number in its links on every page (index.html, blog/*.html, thank-you.html, send-request.php) so visitors get the new version straight away.
