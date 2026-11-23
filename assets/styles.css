@@ -137,8 +137,8 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .hero-main { display: contents; }
 .hero-kicker { display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); }
 .hero-star { width: clamp(36px, 3.4vw, 52px); height: auto; flex: none; }
-.hero-kicker p { font-size: clamp(16px, 1.5vw, 22px); font-weight: 500; text-transform: uppercase; line-height: 1.25; letter-spacing: -0.01em; }
-.hero h1 {
+.hero-kicker h1, .hero-kicker p { font-size: clamp(16px, 1.5vw, 22px); font-weight: 500; text-transform: uppercase; line-height: 1.25; letter-spacing: -0.01em; }
+.hero .hero-slogan {
   font-size: clamp(52px, 8vw, 150px); font-weight: 500; text-transform: uppercase;
   letter-spacing: -0.06em; line-height: .86;
 }
@@ -383,7 +383,7 @@ body.menu-open .call-fab { display: none; }
   .display { font-size: 14.5vw; }
   /* phones: one left-aligned block that wraps naturally (no zigzag) */
   /* phones: five-line zigzag, words alternate left and right */
-  .hero h1 { font-size: 15vw; }
+  .hero .hero-slogan { font-size: 15vw; }
   .hero .h-line { display: contents; }
   .hero .m-l, .hero .m-r { display: block; white-space: nowrap; }
   .hero .m-l { text-align: left; }
