@@ -379,15 +379,21 @@ body.menu-open .call-fab { display: none; }
   .footer-social { order: 3; }
   .steps { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 600px) {
-  .display { font-size: 14.5vw; }
-  /* phones: one left-aligned block that wraps naturally (no zigzag) */
-  /* phones: five-line zigzag, words alternate left and right */
+/* Phones and upright tablets (iPad): five-line zigzag slogan that fills the screen */
+@media (max-width: 600px), (max-width: 1100px) and (orientation: portrait) {
   .hero .hero-slogan { font-size: 15vw; }
   .hero .h-line { display: contents; }
   .hero .m-l, .hero .m-r { display: block; white-space: nowrap; }
   .hero .m-l { text-align: left; }
   .hero .m-r { text-align: right; }
+}
+/* Upright tablets: slightly larger tagline to match the bigger slogan */
+@media (min-width: 601px) and (max-width: 1100px) and (orientation: portrait) {
+  .hero-kicker h1 { font-size: 26px; }
+  .hero-star { width: 56px; }
+}
+@media (max-width: 600px) {
+  .display { font-size: 14.5vw; }
   .h-right { text-wrap: balance; }
   .steps { grid-template-columns: 1fr; }
   .contact-form .row, .review-grid, .blog-grid { grid-template-columns: 1fr; }
