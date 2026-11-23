@@ -139,11 +139,24 @@ body.menu-open .menu-toggle .bars::before { top: 0; transform: rotate(-90deg); }
 .hero-star { width: clamp(36px, 3.4vw, 52px); height: auto; flex: none; }
 .hero-kicker h1, .hero-kicker p { font-size: clamp(16px, 1.5vw, 22px); font-weight: 500; text-transform: uppercase; line-height: 1.25; letter-spacing: -0.01em; }
 .hero .hero-slogan {
-  font-size: clamp(52px, 8vw, 150px); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(52px, min(10.8vw, 17vh), 230px); font-weight: 500; text-transform: uppercase;
   letter-spacing: -0.06em; line-height: .86;
 }
 .h-line { display: block; }
 .h-right { text-align: right; }
+/* Computers: zigzag like the phone, left / right / left, filling the width */
+@media (min-width: 601px) and (orientation: landscape) {
+  .hero .h-line:nth-child(3) { text-align: left; }
+  .hero .h-line { white-space: nowrap; }
+  .hero-media::before {
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,.08) 55%, rgba(0,0,0,.18)),
+      linear-gradient(180deg, rgba(0,0,0,.3), rgba(0,0,0,.12) 45%, rgba(0,0,0,.5));
+  }
+  .hero-kicker h1 { font-size: clamp(18px, 1.6vw, 26px); }
+  .hero-star { width: clamp(44px, 3.6vw, 60px); }
+  .hero-content { padding-top: clamp(140px, 18vh, 210px); }
+}
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .btn-dot { gap: 26px; padding: 20px 32px; font-size: clamp(17px, 1.3vw, 19px); font-weight: 500; letter-spacing: -0.01em; }
 .hero .btn-ghost { border-color: rgba(255,255,255,.7); }
