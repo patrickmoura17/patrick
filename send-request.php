@@ -33,7 +33,8 @@ function page(int $status, string $title, string $message): never {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{$t} | Surffaces</title>
   <meta name="robots" content="noindex">
-  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg?v=de62aacd">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon.png?v=de62aacd">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css?v=dfc74274">
 </head>
