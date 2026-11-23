@@ -29,3 +29,8 @@ Blog articles live in `blog/` (one HTML file per post; copy one to add another, 
 - **Reviews are examples.** Replace the three reviews in `index.html` with real customer reviews (with permission), and point "Read reviews on Google" at your Google Business profile.
 - **Check the FAQ answers** match how you work (installation, supply-only, trade accounts, timelines).
 - **Social links** in the footer point to `#`; add your real profile URLs.
+
+## Search engines
+
+- `robots.txt` allows crawling (except the form handler, thank-you page and `private/`) and points to the sitemap.
+- `sitemap.xml` lists the homepage and the blog guides. **Add every new public page to it** (with its `www.surffaces.com` address) when you create one.

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /send-request.php
+Disallow: /thank-you.html
+
+Sitemap: https://www.surffaces.com/sitemap.xml
