@@ -1,0 +1,78 @@
+import type { CatalogItem, ServiceCategory, Unit } from "../types";
+
+type C = Omit<CatalogItem, "id" | "created_at" | "active">;
+const i = (category: ServiceCategory, section: string, name: string, unit: Unit, material_cost: number, labor_cost: number, markup: number, description = ""): C => ({
+  category, section, name, unit, material_cost, labor_cost, markup, description,
+});
+
+// Default pricing catalog (costs per unit). Fully editable in Settings → Pricing Catalog.
+export const CATALOG: C[] = [
+  // TILE
+  i("tile", "Demolition", "Tile demolition & haul-off", "SQFT", 0.35, 2.75, 40, "Remove existing tile and setting bed, load and dispose of debris."),
+  i("tile", "Preparation", "Floor preparation & leveling", "SQFT", 0.95, 1.6, 40, "Self-leveling underlayment and surface prep to ANSI tolerances."),
+  i("tile", "Preparation", "Cement board / uncoupling membrane", "SQFT", 1.45, 1.25, 35, "Install backer board or uncoupling membrane (Schluter DITRA or equal)."),
+  i("tile", "Installation", "Floor tile installation", "SQFT", 0, 7.5, 45, "Set floor tile with polymer-modified thinset, straight lay."),
+  i("tile", "Installation", "Large format tile (24\"+) floor", "SQFT", 0, 9.5, 45, "Large format porcelain with leveling clip system."),
+  i("tile", "Installation", "Shower wall tile installation", "SQFT", 0, 12, 45, "Wall tile set in shower surround, including corners and trim."),
+  i("tile", "Installation", "Backsplash tile installation", "SQFT", 0, 14, 45, "Kitchen backsplash, includes outlet cutouts and edge trim."),
+  i("tile", "Shower", "Waterproofing membrane", "SQFT", 2.1, 2.4, 40, "Liquid or sheet membrane, flood tested 24 hours."),
+  i("tile", "Shower", "Shower pan (mortar bed / pre-slope)", "EA", 285, 650, 40, "Custom mortar bed shower pan with liner and drain assembly."),
+  i("tile", "Shower", "Linear drain installation", "EA", 240, 225, 35, "Linear drain body and grate, set to slope."),
+  i("tile", "Shower", "Shower niche", "EA", 65, 210, 45, "Recessed niche with tile-wrapped edges or metal trim."),
+  i("tile", "Finishing", "Grout & finishing", "SQFT", 0.45, 1.1, 40, "Grout, clean and seal; color per selection."),
+  i("tile", "Finishing", "Epoxy grout upgrade", "SQFT", 1.2, 1.4, 40, "Stain-proof epoxy grout."),
+  i("tile", "Finishing", "Metal edge trim (Schluter)", "LF", 6.5, 4, 40),
+  i("tile", "Patterns", "Custom pattern premium (herringbone/chevron)", "SQFT", 0, 4.5, 45, "Labor premium for herringbone, chevron, or mosaic layouts."),
+  i("tile", "Materials", "Tile material allowance", "SQFT", 6.5, 0, 20, "Tile material allowance; final per customer selection."),
+  // FLOORING
+  i("flooring", "Demolition", "Floor demolition (carpet/vinyl/laminate)", "SQFT", 0.2, 1.25, 40, "Remove and dispose of existing floor covering."),
+  i("flooring", "Demolition", "Hardwood / glued floor removal", "SQFT", 0.25, 2.5, 40),
+  i("flooring", "Preparation", "Subfloor preparation", "SQFT", 0.6, 1.15, 40, "Fasten, sand high spots and patch low spots."),
+  i("flooring", "Preparation", "Plywood subfloor replacement", "SQFT", 2.4, 2.6, 35),
+  i("flooring", "Preparation", "Underlayment / moisture barrier", "SQFT", 0.45, 0.35, 35),
+  i("flooring", "Installation", "Hardwood installation (nail-down)", "SQFT", 0, 4.25, 45, "Solid hardwood, nail-down over wood subfloor."),
+  i("flooring", "Installation", "Engineered hardwood installation", "SQFT", 0, 3.75, 45, "Glue or float engineered hardwood."),
+  i("flooring", "Installation", "Luxury vinyl plank (LVP) installation", "SQFT", 0, 2.35, 45, "Click-lock LVP floating installation."),
+  i("flooring", "Installation", "Laminate installation", "SQFT", 0, 2.15, 45),
+  i("flooring", "Installation", "Carpet installation with pad", "SQFT", 0.55, 1.25, 40),
+  i("flooring", "Trim", "Baseboard installation", "LF", 1.6, 2.4, 40, "Install, caulk and prep baseboards for paint."),
+  i("flooring", "Trim", "Quarter round / shoe molding", "LF", 0.7, 1.1, 40),
+  i("flooring", "Trim", "Transition strips / thresholds", "EA", 28, 35, 40),
+  i("flooring", "Trim", "Stair tread & riser installation", "EA", 65, 85, 40),
+  i("flooring", "Materials", "LVP material", "SQFT", 3.1, 0, 25),
+  i("flooring", "Materials", "Engineered hardwood material", "SQFT", 6.25, 0, 25),
+  // CABINETS
+  i("cabinets", "Demolition", "Cabinet removal & disposal", "LF", 0, 22, 40, "Remove existing upper and base cabinets."),
+  i("cabinets", "Installation", "Kitchen base cabinet installation", "EA", 0, 145, 40, "Level, shim, fasten and join base cabinets."),
+  i("cabinets", "Installation", "Kitchen wall cabinet installation", "EA", 0, 125, 40),
+  i("cabinets", "Installation", "Tall / pantry cabinet installation", "EA", 0, 210, 40),
+  i("cabinets", "Installation", "Bathroom vanity installation", "EA", 0, 325, 40, "Install vanity, connect to existing plumbing rough-in."),
+  i("cabinets", "Installation", "Crown molding & light rail", "LF", 6.5, 9, 40),
+  i("cabinets", "Hardware", "Hardware installation (knobs & pulls)", "EA", 0, 8.5, 45),
+  i("cabinets", "Modifications", "Custom cabinet modification", "HR", 0, 75, 40, "Field modifications: filler scribing, panel cutting, appliance fits."),
+  i("cabinets", "Accessories", "Pull-out / roll-out accessory install", "EA", 0, 65, 40),
+  i("cabinets", "Accessories", "Soft-close hinge upgrade", "EA", 9, 6, 40),
+  i("cabinets", "Materials", "Shaker cabinet package (per box)", "EA", 410, 0, 25, "Plywood box, soft-close, painted shaker door."),
+  i("cabinets", "Materials", "Vanity cabinet 36\"", "EA", 640, 0, 25),
+  // COUNTERTOPS
+  i("countertops", "Demolition", "Countertop demolition & removal", "SQFT", 0, 6, 40, "Remove and dispose of existing countertops."),
+  i("countertops", "Material", "Quartz countertop (group 2)", "SQFT", 48, 0, 30, "Engineered quartz, 3cm, eased edge."),
+  i("countertops", "Material", "Granite countertop (level 2)", "SQFT", 38, 0, 30),
+  i("countertops", "Material", "Marble countertop", "SQFT", 72, 0, 30),
+  i("countertops", "Material", "Quartzite countertop", "SQFT", 82, 0, 30),
+  i("countertops", "Material", "Porcelain slab countertop", "SQFT", 58, 0, 30),
+  i("countertops", "Fabrication", "Countertop fabrication & templating", "SQFT", 0, 14, 40, "Digital template, CNC fabrication, edge polishing."),
+  i("countertops", "Installation", "Countertop installation", "SQFT", 0, 9, 40, "Set, seam, level and silicone."),
+  i("countertops", "Cutouts", "Undermount sink cutout", "EA", 0, 225, 40),
+  i("countertops", "Cutouts", "Faucet hole", "EA", 0, 35, 40),
+  i("countertops", "Cutouts", "Cooktop cutout", "EA", 0, 175, 40),
+  i("countertops", "Edges", "Waterfall edge", "EA", 180, 650, 40, "Mitered waterfall leg, per side."),
+  i("countertops", "Edges", "Edge profile upgrade (ogee/bevel)", "LF", 0, 18, 40),
+  i("countertops", "Backsplash", "Full-height slab backsplash", "SQFT", 48, 16, 30),
+  i("countertops", "Backsplash", "4\" matching backsplash", "LF", 9, 12, 35),
+  // GENERAL
+  i("general", "General", "Project management & protection", "LS", 150, 350, 30, "Floor/dust protection, daily clean-up and project coordination."),
+  i("general", "General", "Dumpster / debris disposal", "EA", 525, 0, 20),
+  i("general", "General", "Permit & inspection", "LS", 350, 150, 15),
+  i("general", "General", "Plumbing disconnect / reconnect", "EA", 25, 185, 35),
+];

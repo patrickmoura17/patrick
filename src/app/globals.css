@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { @apply bg-stone-100 text-ink-900; font-feature-settings: "cv11", "ss01", "ss03"; }
+  ::selection { background: #e5d2ad; }
+}
+
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .scrollbar-none { scrollbar-width: none; }
+  .animate-fade { animation: fade .15s ease-out; }
+  .animate-rise { animation: rise .18s cubic-bezier(.2,.8,.2,1); }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .bg-grid {
+    background-image: linear-gradient(to right, #ece9e3 1px, transparent 1px), linear-gradient(to bottom, #ece9e3 1px, transparent 1px);
+  }
+  .noise { background-image: radial-gradient(circle at 20% 0%, rgba(176,138,72,.18), transparent 45%), radial-gradient(circle at 100% 100%, rgba(79,113,144,.18), transparent 40%); }
+}
+
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes rise { from { opacity: 0; transform: translateY(6px) scale(.985) } to { opacity: 1; transform: none } }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #cfc9be; border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background-color: #a8a093; }
+
+@media print {
+  .no-print { display: none !important; }
+}
