@@ -1,14 +1,14 @@
 // Builds the initial database. `config` = everything a brand-new company needs
 // (roles, pipeline, catalog, templates, automations, settings). `demo` adds a
 // realistic, internally-consistent business history so every screen can be explored.
-import { addDaysISO, estimateTotals, lineUnitPrice, milestoneAmounts, round2, todayISO, unitPriceFrom } from "../calc";
+import { addDaysISO, estimateTotals, milestoneAmounts, round2, todayISO, unitPriceFrom } from "../calc";
 import { hashPassword } from "../hash";
 import { DEFAULT_ROLES } from "../permissions";
 import { emptySnapshot, type Snapshot } from "../backends/types";
 import { CATALOG } from "./catalog";
 import {
-  PROJECT_STAGES, TABLES, type Automation, type CatalogItem, type CompanySettings, type EstimateItem, type ID,
-  type Invoice, type PaymentMilestone, type Project, type ServiceCategory, type Unit,
+  TABLES, type Automation, type CatalogItem, type CompanySettings, type EstimateItem, type ID,
+  type Invoice, type PaymentMilestone, type Project, type ServiceCategory,
 } from "../types";
 
 let counter = 0;
@@ -258,6 +258,7 @@ export async function buildSeed(opts: { demo: boolean; ownerEmail?: string; owne
       notes: i === 0 ? "Prefers text messages. Two dogs — keep gate closed." : i === 3 ? "Builder partner: 4–6 spec homes per year. Net 30 terms." : "",
       tags: i === 3 || i === 12 ? ["trade"] : i === 6 ? ["repeat", "vip"] : [],
       portal_token: (nid() + nid()).replace(/-/g, "").slice(0, 48), owner_id: P.sales_rep,
+      created_at: ts(-420 + i * 25),
     });
   });
   const C = (i: number) => customers[i];
@@ -584,11 +585,6 @@ export async function buildSeed(opts: { demo: boolean; ownerEmail?: string; owne
   note("Invoice overdue", `${S.invoices.find((x) => x.status === "overdue")!.number} · Whitfield Custom Homes`, "/finance", "danger", ["owner", "office_manager"]);
   note("Insurance expiring", "Kevin Park's COI expires in 18 days", "/team", "warning", ["owner", "office_manager", "project_manager"]);
   note("Change order awaiting approval", "CO-102 sent to Sofia Martinez", "/change-orders", "info", ["owner", "project_manager"], -1);
-
-  // project p0 is the demo's most complete record
-  void lineUnitPrice;
-  void PROJECT_STAGES;
-  void ({} as Unit);
 
   // update counters
   const cs2 = S.company_settings[0] as CompanySettings;
