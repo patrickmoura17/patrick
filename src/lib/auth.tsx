@@ -9,6 +9,7 @@ import { verifyPassword } from "./hash";
 import { buildSeed } from "./seed";
 import { db, useTable } from "./store";
 import { runScheduledChecks } from "./services";
+import { autoBackup } from "./backup";
 import type { Permission, Profile, Role } from "./types";
 
 type Status = "loading" | "needs_setup" | "signed_out" | "ready" | "error";
@@ -70,6 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } else setStatus("signed_out");
       }
       runScheduledChecks();
+      void autoBackup().catch(() => {});
     } catch (e) {
       setError((e as Error).message);
       setStatus("error");

@@ -213,6 +213,8 @@ create index estimates_customer_idx on public.estimates (customer_id);
 create index estimates_status_idx on public.estimates (status);
 alter table public.projects add constraint projects_estimate_fk
   foreign key (estimate_id) references public.estimates(id) on delete set null;
+-- one project per approved estimate (guards concurrent automation runs)
+create unique index projects_estimate_unique on public.projects (estimate_id) where estimate_id is not null;
 
 create table public.estimate_items (
   id uuid primary key default gen_random_uuid(),

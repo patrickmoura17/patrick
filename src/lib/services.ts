@@ -211,6 +211,11 @@ export function createProjectFromEstimate(estimateId: ID): Project | undefined {
   const e = db.get("estimates", estimateId);
   if (!e) return;
   if (e.project_id && db.get("projects", e.project_id)) return db.get("projects", e.project_id);
+  const existing = db.all("projects").find((p) => p.estimate_id === e.id);
+  if (existing) {
+    db.update("estimates", e.id, { project_id: existing.id });
+    return existing;
+  }
   const items = db.where("estimate_items", (i) => i.estimate_id === e.id);
   const t = estimateTotals(e, items);
   const cust = db.get("customers", e.customer_id);
@@ -527,8 +532,10 @@ registerDomainHandlers({ createProjectFromEstimate: (id) => void createProjectFr
 
 // Remote changes (e.g. customer actions through the Supabase portal RPCs) run
 // the same downstream automations as local actions.
+// Only in Supabase mode: in local mode the originating tab already ran the
+// automations and the other tabs merely mirror the resulting rows.
 db.onChange(({ table, before, after, origin }) => {
-  if (origin !== "remote" || !after) return;
+  if (origin !== "remote" || !after || db.backend?.mode !== "supabase") return;
   const b = before as Record<string, unknown> | null;
   const a = after as Record<string, unknown>;
   if (table === "estimates" && a.status === "approved" && b?.status !== "approved" && !a.project_id) {
@@ -538,5 +545,12 @@ db.onChange(({ table, before, after, origin }) => {
   if (table === "messages" && !b && a.sender === "customer") {
     fire("portal.message", { record_id: a.id as ID, customer_id: a.customer_id as ID, project_id: (a.project_id as ID) ?? null, vars: { customer: custName(db.get("customers", a.customer_id as ID)), body: String(a.body).slice(0, 120) } });
   }
-  if (table === "payments" && !b) refreshInvoiceStatus(a.invoice_id as ID);
+  if (table === "payments" && !b && a.processor === "portal") {
+    refreshInvoiceStatus(a.invoice_id as ID);
+    const inv = db.get("invoices", a.invoice_id as ID);
+    const proj = inv?.project_id ? db.get("projects", inv.project_id) : undefined;
+    const ctx = { record_id: a.id as ID, project_id: inv?.project_id ?? null, customer_id: a.customer_id as ID, vars: { number: inv?.number ?? "", customer: custName(db.get("customers", a.customer_id as ID)), amount: money(Number(a.amount)), method: String(a.method), project: proj?.name ?? "" } };
+    fire("payment.received", ctx);
+    if (inv?.kind === "deposit") fire("deposit.received", ctx);
+  }
 });

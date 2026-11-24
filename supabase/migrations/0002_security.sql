@@ -106,7 +106,8 @@ begin
     'files', coalesce((select jsonb_agg(to_jsonb(f)) from public.files f
                        where f.customer_id = c.id and (f.shared_with_customer or f.uploaded_by_customer)), '[]'),
     'events', coalesce((select jsonb_agg(jsonb_build_object('id', ev.id, 'title', ev.title, 'type', ev.type, 'start', ev.start, 'end', ev."end", 'project_id', ev.project_id, 'status', ev.status))
-                        from public.events ev where ev.customer_id = c.id and ev.status <> 'cancelled'), '[]'),
+                        from public.events ev where ev.customer_id = c.id and ev.status <> 'cancelled'
+                          and ev.type in ('site_visit','estimate','installation','delivery','inspection')), '[]'),
     'messages', coalesce((select jsonb_agg(to_jsonb(m) order by m.created_at) from public.messages m where m.customer_id = c.id), '[]')
   );
 end $$;
@@ -143,6 +144,18 @@ begin
     from public.projects p
    where co.id = p_co and p.id = co.project_id and p.customer_id = c.id and co.status = 'sent';
   if not found then raise exception 'change order not available'; end if;
+  if p_action = 'approved' then
+    -- fold the approved change into the contract (same math as src/lib/calc.ts changeOrderTotals)
+    update public.projects p
+       set contract_value = p.contract_value + t.amount,
+           estimated_cost = p.estimated_cost + t.cost,
+           end_date = case when p.end_date is not null then p.end_date + co.schedule_impact_days else null end
+      from public.change_orders co,
+           lateral (select coalesce(sum((case when i->>'action' = 'remove' then -1 else 1 end) * (i->>'quantity')::numeric * (i->>'unit_price')::numeric), 0) as amount,
+                           coalesce(sum((case when i->>'action' = 'remove' then -1 else 1 end) * (i->>'quantity')::numeric * ((i->>'material_cost')::numeric + (i->>'labor_cost')::numeric)), 0) as cost
+                      from jsonb_array_elements(co.items) i) t
+     where co.id = p_co and p.id = co.project_id;
+  end if;
   insert into public.notifications (title, body, link, kind, role_keys)
   values ('Change order ' || p_action, c.first_name || ' ' || c.last_name, '/change-orders', 'info', '{owner,office_manager,project_manager}');
 end $$;
@@ -233,3 +246,44 @@ end $$;
 
 create trigger on_auth_user_created after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- ---------- public website inquiry intake --------------------------------
+-- Dedupes the customer by email/phone, creates the lead in the first pipeline
+-- stage and notifies the sales team. Rate limiting belongs at the edge (e.g.
+-- Cloudflare / Supabase Edge Function with captcha) in production.
+create or replace function public.submit_inquiry(p_payload jsonb) returns uuid
+language plpgsql security definer set search_path = public as $$
+declare
+  v_name text := trim(coalesce(p_payload->>'name', ''));
+  v_email text := lower(trim(coalesce(p_payload->>'email', '')));
+  v_phone text := trim(coalesce(p_payload->>'phone', ''));
+  v_cust uuid;
+  v_lead uuid;
+  v_stage uuid;
+  v_services text[];
+begin
+  if v_name = '' or (v_email = '' and v_phone = '') then raise exception 'name and email or phone are required'; end if;
+  if length(coalesce(p_payload->>'message', '')) > 5000 then raise exception 'message too long'; end if;
+  select array(select jsonb_array_elements_text(coalesce(p_payload->'services', '[]'::jsonb))) into v_services;
+  select id into v_cust from public.customers
+   where (v_email <> '' and lower(email) = v_email)
+      or (length(regexp_replace(v_phone, '\D', '', 'g')) >= 7 and regexp_replace(phone, '\D', '', 'g') = regexp_replace(v_phone, '\D', '', 'g'))
+   limit 1;
+  if v_cust is null then
+    insert into public.customers (first_name, last_name, email, phone, billing_address, project_address, lead_source)
+    values (split_part(v_name, ' ', 1), nullif(substr(v_name, length(split_part(v_name, ' ', 1)) + 2), ''), v_email, v_phone,
+            coalesce(p_payload->>'address', ''), coalesce(p_payload->>'address', ''), coalesce(p_payload->>'source', 'Website'))
+    returning id into v_cust;
+  end if;
+  select id into v_stage from public.pipeline_stages order by position limit 1;
+  insert into public.leads (customer_id, title, services, stage_id, priority, source, estimated_value, follow_up_date, description, inquiry_payload)
+  values (v_cust, coalesce(nullif(array_to_string(v_services, ' + '), ''), 'Website') || ' inquiry', v_services, v_stage, 'high',
+          coalesce(p_payload->>'source', 'Website'), coalesce((p_payload->>'budget')::numeric, 0), current_date + 1,
+          coalesce(p_payload->>'message', ''), p_payload)
+  returning id into v_lead;
+  insert into public.activities (type, subject, body, customer_id, lead_id) values ('email', 'Website inquiry received', coalesce(p_payload->>'message', ''), v_cust, v_lead);
+  insert into public.notifications (title, body, link, kind, role_keys)
+  values ('New website inquiry', v_name, '/leads/' || v_lead, 'info', '{owner,sales_rep,office_manager}');
+  return v_lead;
+end $$;
+grant execute on function public.submit_inquiry to anon, authenticated;
