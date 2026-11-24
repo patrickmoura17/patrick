@@ -583,6 +583,51 @@ export interface AuditLog extends BaseRow {
   changes: Record<string, { from: unknown; to: unknown }> | null;
 }
 
+// ---------------------------------------------------------------- countertop quotes
+export type CounterKind = "rect" | "l" | "u";
+export interface CounterEdgeAttr { wall?: boolean; splash?: "none" | "4in" | "full"; curve?: number }
+export interface CounterCorner { type: "none" | "radius" | "clip"; size: number }
+export interface Counter {
+  id: string;
+  label: string;
+  kind: CounterKind;
+  x: number; // inches, world
+  y: number;
+  rot: 0 | 90 | 180 | 270;
+  flip: boolean;
+  island: boolean;
+  p: { length: number; depth: number; legL?: number; legR?: number; depthL?: number; depthR?: number };
+  edges: Record<number, CounterEdgeAttr>;
+  corners: Record<number, CounterCorner>;
+}
+export interface Cutout {
+  id: string;
+  counter_id: string;
+  kind: "undermount" | "drop_in" | "farm" | "vanity" | "bar" | "cooktop";
+  w: number;
+  d: number;
+  x: number; // local (counter) coordinates of the center, inches
+  y: number;
+  faucet_holes: number;
+}
+export interface QuoteText { id: string; x: number; y: number; text: string }
+export interface QuoteDrawing { counters: Counter[]; cutouts: Cutout[]; texts: QuoteText[] }
+export interface CountertopQuote extends BaseRow, QuoteDrawing {
+  name: string;
+  customer_id: ID;
+  lead_id: ID | null;
+  estimate_id: ID | null;
+  status: "draft" | "sent" | "accepted";
+  step: number;
+  material: { catalog_item_id: ID | null; color: string; thickness: "2cm" | "3cm" };
+  edge_profile: string;
+  splash_height: number; // inches for full-height splash
+  options: { tearout: boolean; waste_percent: number };
+  rates_override: Record<string, number>;
+  revisions: { id: string; name: string; at: ISODateTime; data: QuoteDrawing }[];
+  notes: string;
+}
+
 export interface Tables {
   company_settings: CompanySettings;
   roles: Role;
@@ -617,6 +662,7 @@ export interface Tables {
   notifications: Notification;
   messages: Message;
   audit_logs: AuditLog;
+  countertop_quotes: CountertopQuote;
 }
 
 export type TableName = keyof Tables;
@@ -626,6 +672,7 @@ export const TABLES: TableName[] = [
   "project_updates", "files", "change_orders", "measurements", "events", "crews", "employees",
   "time_entries", "suppliers", "inventory_items", "purchase_orders", "stock_movements", "invoices",
   "payments", "expenses", "automations", "automation_runs", "notifications", "messages", "audit_logs",
+  "countertop_quotes",
 ];
 
 export type NewRow<T extends TableName> = Omit<Tables[T], "id" | "created_at" | "updated_at"> & { id?: ID };

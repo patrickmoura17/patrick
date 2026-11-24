@@ -363,3 +363,47 @@ export function openPdf(doc: jsPDF, filename: string, mode: "download" | "previe
   if (mode === "download") doc.save(filename);
   else window.open(doc.output("bloburl"), "_blank");
 }
+
+export async function countertopQuotePdf(
+  co: CompanySettings,
+  q: { name: string; material: { color: string; thickness: string }; notes: string },
+  cust: Customer | undefined,
+  priced: { lines: { label: string; qty: number; unit: string; price: number; total: number }[]; subtotal: number; geom: { sqft: number; finishedLf: number } },
+  drawingPng: string,
+  taxRate: number,
+  materialName: string,
+  edgeLabel: string,
+) {
+  const doc = new jsPDF({ unit: "mm", format: "letter" });
+  let y = await header(doc, co, "Countertop Quote", [["Quote", q.name], ["Date", fmtDate(new Date().toISOString())]]);
+  y = partyBlock(
+    doc, y,
+    { title: "Prepared for", lines: [custLabel(cust), cust?.project_address ?? "", cust?.phone ?? "", cust?.email ?? ""] },
+    { title: "Selection", lines: [`${materialName}${q.material.color ? ` — ${q.material.color}` : ""}`, `${q.material.thickness} · ${edgeLabel} edge`, `${priced.geom.sqft.toFixed(2)} sq ft · ${priced.geom.finishedLf.toFixed(1)} LF finished edge`] },
+  );
+  const W = doc.internal.pageSize.getWidth();
+  const props = doc.getImageProperties(drawingPng);
+  const iw = W - 28, ih = Math.min(110, (iw * props.height) / props.width);
+  const iw2 = (ih * props.width) / props.height;
+  doc.setDrawColor(...LINE);
+  doc.roundedRect(14, y, iw, ih + 6, 2, 2);
+  doc.addImage(drawingPng, "PNG", 14 + (iw - iw2) / 2, y + 3, iw2, ih);
+  y += ih + 12;
+  autoTable(doc, {
+    ...TABLE_STYLE,
+    startY: y,
+    head: [["Item", "Qty", "Unit", "Price", "Amount"]],
+    body: priced.lines.map((l) => [l.label, String(l.qty), l.unit, money(l.price), money(l.total)]),
+    columnStyles: { 1: { halign: "right" }, 2: { halign: "center" }, 3: { halign: "right" }, 4: { halign: "right", fontStyle: "bold" } },
+  });
+  y = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 6;
+  const tax = Math.round(priced.subtotal * taxRate) / 100;
+  y = totalsBox(doc, y, [["Subtotal", money(priced.subtotal)], [`Tax (${taxRate}%)`, money(tax)], ["Total", money(priced.subtotal + tax), true]]);
+  if (q.notes) {
+    y = sectionTitle(doc, y + 4, "Notes");
+    y = paragraph(doc, y, q.notes);
+  }
+  paragraph(doc, y + 4, "Final price is confirmed after digital templating on site. Natural stone varies in color and veining; seam placement is determined at fabrication.", 8);
+  footer(doc, co);
+  return doc;
+}

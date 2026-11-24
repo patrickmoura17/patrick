@@ -95,6 +95,19 @@ profiles >─ roles(permissions[])   automations ──< automation_runs   notif
 
 All of these are editable rules in **Automations** (enable/disable, conditions, extra actions).
 
+## Countertop quote builder
+
+`/countertops` → full-screen, tablet-friendly drawing workspace (`/countertop-quote/[id]`) with a six-step flow:
+
+1. **Counter Dimensions** — straight, L, U and island shapes; drag to place; tap any dimension to type it (`25 1/2`, `8' 4"`); rotate / mirror / duplicate.
+2. **Curves & Bumpouts** — curved or bumped edges (+ out / − in) and radius or clipped corners.
+3. **Splash & Edge** — mark wall edges (blue) with none / 4" / full-height splash; everything else is a finished edge.
+4. **Sink & Cooktop** — undermount, drop-in, farmhouse, vanity, bar sinks and cooktops with faucet holes; drag into place.
+5. **Color & Edge** — material from the pricing catalog, color/slab name, 2cm/3cm, edge profile.
+6. **Price Details** — square footage, edge LF, cutouts priced from the catalog (each rate overridable), margin, PDF quote with the drawing, and **Send to estimate** (re-sending replaces the quote's lines).
+
+Undo/redo, named revisions, autosave, zoom/pan and text labels are on the toolbar. Geometry and pricing live in `src/lib/countertop.ts` (unit-tested); the table is `supabase/migrations/0004_countertop_quotes.sql`.
+
 ## Security
 
 - **Authentication:** Supabase Auth in cloud mode. In local mode, accounts use PBKDF2-SHA256 hashed passwords.

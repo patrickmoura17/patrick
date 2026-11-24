@@ -554,3 +554,39 @@ db.onChange(({ table, before, after, origin }) => {
     if (inv?.kind === "deposit") fire("deposit.received", ctx);
   }
 });
+
+// ---------------------------------------------------------------- countertop quotes
+export function createCountertopQuote(o: { customer_id: ID; lead_id?: ID | null; estimate_id?: ID | null; name?: string }) {
+  const mat = db.all("catalog_items").find((c) => c.category === "countertops" && c.section === "Material" && c.active);
+  const cust = db.get("customers", o.customer_id);
+  return db.insert("countertop_quotes", {
+    name: o.name || `${cust?.last_name || "New"} Kitchen`, customer_id: o.customer_id, lead_id: o.lead_id ?? null, estimate_id: o.estimate_id ?? null,
+    status: "draft", step: 1, counters: [], cutouts: [], texts: [],
+    material: { catalog_item_id: mat?.id ?? null, color: "", thickness: "3cm" }, edge_profile: "eased", splash_height: 18,
+    options: { tearout: false, waste_percent: 0 }, rates_override: {}, revisions: [], notes: "",
+  });
+}
+
+/** Writes the quote's priced lines into its estimate (creating one if needed). Re-running replaces them. */
+export function countertopQuoteToEstimate(quoteId: ID, lines: { label: string; qty: number; unit: "SQFT" | "LF" | "EA"; material: number; labor: number; markup: number; price: number; key: string }[]) {
+  const q = db.get("countertop_quotes", quoteId);
+  if (!q) throw new Error("Quote not found");
+  let est = q.estimate_id ? db.get("estimates", q.estimate_id) : undefined;
+  if (est && est.status === "approved") throw new Error("The linked estimate is approved — use a change order instead.");
+  if (!est) {
+    est = createEstimate({ customer_id: q.customer_id, lead_id: q.lead_id, title: `${q.name} — Countertops` });
+    db.update("countertop_quotes", q.id, { estimate_id: est.id });
+  }
+  const section = `Countertop quote: ${q.name}`;
+  db.where("estimate_items", (i) => i.estimate_id === est!.id && i.section === section).forEach((i) => db.remove("estimate_items", i.id));
+  const geomNote = (k: string) => (k === "material" ? "Measured from the countertop drawing; includes all counters and islands." : "");
+  lines.forEach((l) => {
+    const computed = unitPriceFrom(l.material, l.labor, l.markup);
+    addEstimateItem(est!.id, {
+      category: "countertops", section, name: l.label, description: geomNote(l.key), quantity: l.qty, unit: l.unit,
+      material_cost: l.material, labor_cost: l.labor, markup: l.markup, unit_price: l.price, price_override: Math.abs(computed - l.price) > 0.005,
+    });
+  });
+  logActivity({ subject: `Countertop quote “${q.name}” added to ${est.number}`, customer_id: q.customer_id, lead_id: q.lead_id, estimate_id: est.id });
+  return est;
+}

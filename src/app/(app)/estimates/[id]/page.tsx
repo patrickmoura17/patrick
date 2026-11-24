@@ -4,12 +4,12 @@ import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
   ArrowDown, ArrowUp, BookmarkPlus, CheckCircle2, ChevronDown, ChevronRight, Copy, Download, Eye, FolderKanban, Library, MoreHorizontal,
-  Plus, Ruler, Send, Trash2, XCircle, MessageSquareWarning,
+  Plus, Ruler, Send, Trash2, XCircle, MessageSquareWarning, PenTool,
 } from "lucide-react";
 import { db, useSettings, useSnapshot } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
 import {
-  addEstimateItem, createProjectFromEstimate, custName, deleteEstimate, duplicateEstimate, respondEstimate, saveAsTemplate, sendEstimate,
+  addEstimateItem, createCountertopQuote, createProjectFromEstimate, custName, deleteEstimate, duplicateEstimate, respondEstimate, saveAsTemplate, sendEstimate,
 } from "@/lib/services";
 import { estimateTotals, lineTotal, lineUnitPrice, milestoneAmounts, round2, unitPriceFrom } from "@/lib/calc";
 import { fmtDate, fmtDateTime, money, num, pct } from "@/lib/format";
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui";
 import { RequirePerm } from "@/components/gate";
 import { ScheduleEditor } from "@/components/schedule";
+import { NewQuoteModal } from "@/components/new-quote";
 import type { CatalogItem, EstimateItem, PaymentMilestone, ServiceCategory, TimelinePhase, Unit } from "@/lib/types";
 
 const UNITS: Unit[] = ["SQFT", "LF", "EA", "HR", "LS"];
@@ -44,6 +45,7 @@ function Builder() {
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [measureOpen, setMeasureOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
+  const [drawOpen, setDrawOpen] = useState(false);
   const [showCosts, setShowCosts] = useState(true);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -164,6 +166,7 @@ function Builder() {
               actions={
                 <>
                   <Button size="sm" variant="ghost" onClick={() => setShowCosts((v) => !v)}>{showCosts ? "Hide costs" : "Show costs"}</Button>
+                  {!locked && <Button size="sm" icon={<PenTool className="h-4 w-4" />} onClick={() => setDrawOpen(true)}>Draw countertops</Button>}
                   {!locked && <Button size="sm" icon={<Ruler className="h-4 w-4" />} onClick={() => setMeasureOpen(true)}>From measurements</Button>}
                   {!locked && <Button size="sm" variant="primary" icon={<Library className="h-4 w-4" />} onClick={() => setCatalogOpen(true)}>Add from catalog</Button>}
                 </>
@@ -341,6 +344,14 @@ function Builder() {
       </div>
 
       <CatalogPicker open={catalogOpen} onClose={() => setCatalogOpen(false)} onAdd={(c, qty) => { addEstimateItem(e.id, { category: c.category, section: c.section, name: c.name, description: c.description, unit: c.unit, material_cost: c.material_cost, labor_cost: c.labor_cost, markup: c.markup, quantity: qty }); toast(`Added ${c.name}`); }} />
+      {(() => {
+        const linked = S.countertop_quotes.filter((x) => x.estimate_id === e.id);
+        return linked.length > 0 && drawOpen ? (
+          <Modal open onClose={() => setDrawOpen(false)} title="Countertop drawings" size="sm" footer={<><Button onClick={() => setDrawOpen(false)}>Close</Button><Button variant="primary" onClick={() => { const q = createCountertopQuote({ customer_id: e.customer_id, lead_id: e.lead_id, estimate_id: e.id }); router.push(`/countertop-quote/${q.id}`); }}>New drawing</Button></>}>
+            <div className="space-y-1.5">{linked.map((x) => <Link key={x.id} href={`/countertop-quote/${x.id}`} className="block rounded-lg border border-stone-200 px-3 py-2 text-sm font-medium hover:border-brass-300 hover:bg-brass-50">{x.name} <span className="text-xs font-normal text-stone-500">· {x.counters.length} counters</span></Link>)}</div>
+          </Modal>
+        ) : drawOpen ? <NewQuoteModal open onClose={() => setDrawOpen(false)} customerId={e.customer_id} leadId={e.lead_id} estimateId={e.id} /> : null;
+      })()}
       <MeasurementImport open={measureOpen} onClose={() => setMeasureOpen(false)} estimateId={e.id} leadId={e.lead_id} projectId={e.project_id} customerId={e.customer_id} />
       <ApproveModal open={approveOpen} onClose={() => setApproveOpen(false)} defaultName={custName(cust)} onApprove={(name, note) => { respondEstimate(e.id, "approved", name, note, "staff"); toast("Estimate approved — project created"); setApproveOpen(false); }} />
     </div>

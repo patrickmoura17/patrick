@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { CalendarPlus, Check, FileSignature, Mail, MapPin, Pencil, Phone, Ruler, Trash2, XCircle } from "lucide-react";
+import { CalendarPlus, Check, FileSignature, Mail, MapPin, Pencil, PenTool, Phone, Ruler, Trash2, XCircle } from "lucide-react";
 import { db, useSnapshot } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
 import { custName, moveLead } from "@/lib/services";
@@ -14,6 +14,7 @@ import { EventModal, NewEstimateModal } from "@/components/modals";
 import { EstimateBadge, EVENT_META, PriorityBadge, ServiceChips } from "@/components/status";
 import { Badge, Button, Card, CardHeader, EmptyState, Input, KV, cn, useToast } from "@/components/ui";
 import { RequirePerm } from "@/components/gate";
+import { NewQuoteModal } from "@/components/new-quote";
 
 export default function LeadPage() {
   return (
@@ -32,6 +33,7 @@ function Inner() {
   const [edit, setEdit] = useState(false);
   const [est, setEst] = useState(false);
   const [ev, setEv] = useState(false);
+  const [draw, setDraw] = useState(false);
   const filter = useMemo(() => (a: { lead_id: string | null }) => a.lead_id === id, [id]);
   const lead = S.leads.find((l) => l.id === id);
   if (!lead) return <Card><EmptyState title="Lead not found" action={<Link href="/leads"><Button>Back to pipeline</Button></Link>} /></Card>;
@@ -71,6 +73,7 @@ function Inner() {
             <Button icon={<Pencil className="h-4 w-4" />} onClick={() => setEdit(true)}>Edit</Button>
             <Button icon={<CalendarPlus className="h-4 w-4" />} onClick={() => setEv(true)}>Schedule visit</Button>
             {can("measurements.edit") && <Button icon={<Ruler className="h-4 w-4" />} onClick={() => router.push(`/measurements?lead=${lead.id}`)}>Measure</Button>}
+            {can("estimates.edit") && lead.services.includes("countertops") && <Button icon={<PenTool className="h-4 w-4" />} onClick={() => setDraw(true)}>Countertop quote</Button>}
             {can("estimates.edit") && <Button variant="primary" icon={<FileSignature className="h-4 w-4" />} onClick={() => setEst(true)}>Create estimate</Button>}
           </div>
         )}
@@ -207,6 +210,7 @@ function Inner() {
           </Card>
         </div>
       </div>
+      <NewQuoteModal open={draw} onClose={() => setDraw(false)} customerId={lead.customer_id} leadId={lead.id} />
       <LeadModal open={edit} onClose={() => setEdit(false)} lead={lead} />
       <NewEstimateModal open={est} onClose={() => setEst(false)} customerId={lead.customer_id} leadId={lead.id} />
       <EventModal open={ev} onClose={() => setEv(false)} preset={{ title: `Site visit — ${c?.last_name ?? ""}`, type: "site_visit", customer_id: lead.customer_id, lead_id: lead.id, location: c?.project_address ?? "" }} />

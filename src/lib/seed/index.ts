@@ -539,6 +539,30 @@ export async function buildSeed(opts: { demo: boolean; ownerEmail?: string; owne
     }
   }
 
+  // ----- countertop drawing (CAD-style quote) for the Martinez kitchen
+  {
+    const quartz = catalog.find((c) => c.name === "Quartz countertop (group 2)");
+    const uId = nid(), islandId = nid();
+    push("countertop_quotes", {
+      name: "Martinez Kitchen", customer_id: e2.customer_id, lead_id: leads[2].id, estimate_id: null, status: "draft", step: 1,
+      counters: [
+        { id: uId, label: "Perimeter", kind: "u", x: 0, y: 0, rot: 0, flip: false, island: false,
+          p: { length: 169.5, depth: 25.5, legL: 55.25, legR: 95.5, depthL: 25.5, depthR: 25.5 },
+          edges: { 0: { wall: true, splash: "4in" }, 1: { wall: true, splash: "4in" }, 7: { wall: true, splash: "4in" }, 6: { curve: 3 } },
+          corners: { 3: { type: "radius", size: 3 }, 4: { type: "clip", size: 9 } } },
+        { id: islandId, label: "Island", kind: "rect", x: 59.5, y: 75, rot: 0, flip: false, island: true,
+          p: { length: 50, depth: 32 }, edges: { 2: { curve: 3 } }, corners: {} },
+      ],
+      cutouts: [
+        { id: nid(), counter_id: uId, kind: "undermount", w: 25.5, d: 16, x: 84.75, y: 12.5, faucet_holes: 3 },
+        { id: nid(), counter_id: islandId, kind: "cooktop", w: 30, d: 20, x: 25, y: 15, faucet_holes: 0 },
+      ],
+      texts: [{ id: nid(), x: 58, y: 46, text: "Range wall — 30\" opening" }],
+      material: { catalog_item_id: quartz?.id ?? null, color: "Statuario Venato", thickness: "3cm" },
+      edge_profile: "eased", splash_height: 18, options: { tearout: true, waste_percent: 0 }, rates_override: {}, revisions: [], notes: "Waterfall option discussed for island — price separately.",
+    });
+  }
+
   // ----- calendar
   const ev = (title: string, type: string, dayOff: number, h1: number, h2: number, extra: Record<string, unknown>) =>
     push("events", { title, type, start: dt(dayOff, h1), end: dt(dayOff, h2), all_day: false, project_id: null, customer_id: null, lead_id: null, crew_id: null, employee_ids: [], location: "", notes: "", status: "scheduled", reminder_minutes: 60, ...extra });

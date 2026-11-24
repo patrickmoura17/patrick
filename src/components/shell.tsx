@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   BarChart3, Bell, Boxes, Calendar, ClipboardList, FileSignature, FileText, FolderKanban, FolderOpen, HardHat, LayoutDashboard,
-  LogOut, Menu as MenuIcon, Ruler, Search, Settings, Target, Users, Wallet, Workflow, X, GitPullRequestArrow, ExternalLink,
+  LogOut, Menu as MenuIcon, Ruler, Search, Settings, Target, Users, Wallet, Workflow, X, GitPullRequestArrow, ExternalLink, PenTool,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { db, useSettings, useTable } from "@/lib/store";
@@ -21,6 +21,7 @@ const NAV: { section: string; items: { href: string; label: string; icon: React.
       { href: "/leads", label: "Leads & Pipeline", icon: Target, perm: "leads.view" },
       { href: "/customers", label: "Customers", icon: Users, perm: "customers.view" },
       { href: "/estimates", label: "Estimates", icon: FileSignature, perm: "estimates.view" },
+      { href: "/countertops", label: "Countertop Quotes", icon: PenTool, perm: "estimates.view" },
       { href: "/measurements", label: "Measurements", icon: Ruler, perm: "measurements.view" },
     ],
   },
